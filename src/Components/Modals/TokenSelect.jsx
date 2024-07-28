@@ -56,7 +56,7 @@ const TokenSelect = ({
             </div>
             <div className="topCoins mt-3">
               <ul className="flex flex-wrap gap-x-3 gap-y-2">
-                {tokenList.map((coin, index) => (
+                {tokenList.slice(0,7).map((coin, index) => (
                   <li key={index}>
                     <button
                       className={`border border-[#98a1c014] hover:bg-[#1f1f20] active:bg-[#3a3a3c] p-1 pr-2 rounded-2xl flex items-center justify-between ${

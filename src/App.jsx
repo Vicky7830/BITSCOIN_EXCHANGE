@@ -3,6 +3,7 @@ import Home from './Pages/Home'
 import Swap from './Pages/Swap'
 import Pool from './Pages/Pool'
 import { MetaMaskProvider } from './context/MetamaskContext'
+import AddLiquidity from './Pages/AddLiquidity'
 
 function App() {
   const router = createBrowserRouter([
@@ -17,6 +18,10 @@ function App() {
         {
           path: '/pool',
           element: <Pool/>
+        },
+        {
+          path: '/add/v2',
+          element: <AddLiquidity/>
         }
       ]
     }

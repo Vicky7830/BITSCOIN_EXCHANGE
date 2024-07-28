@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import ethLogo from "../../assets/images/eth_logo.png";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useMetaMask } from "../../context/MetamaskContext";
 import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
 
@@ -29,27 +29,33 @@ const Header = () => {
           <nav class="">
             <div class="flex flex-wrap items-center justify-between mx-auto p-4">
               <div className="flex items-center gap-6">
-                <Link to="/" class="">
+                <Link to="/">
                   <span class="self-center text-2xl font-semibold text-gold">
                     BitsSwaps
                   </span>
                 </Link>
                 <ul className="flex gap-3">
                   <li>
-                    <Link
+                    <NavLink
                       to="/swap"
-                      className="text-lg text-gray-400 hover:text-white"
+                      className={({ isActive, isPending }) =>
+                        `text-lg ${
+                          !isActive && "text-gray-400"
+                        } hover:text-white `
+                      }
                     >
                       Swap
-                    </Link>
+                    </NavLink>
                   </li>
                   <li>
-                    <Link
+                    <NavLink
                       to="/pool"
-                      className="text-lg text-gray-400 hover:text-white"
+                      className={({ isActive, isPending }) =>
+                      `text-lg ${ !isActive && "text-gray-400"} hover:text-white `
+                    }
                     >
                       Pool
-                    </Link>
+                    </NavLink>
                   </li>
                 </ul>
               </div>
@@ -65,9 +71,7 @@ const Header = () => {
                     />
                   </div>
                   <div>
-                    <div
-                      className={`text-center relative copyAdd`}
-                    >
+                    <div className={`text-center relative copyAdd`}>
                       {account ? (
                         <div>
                           <div

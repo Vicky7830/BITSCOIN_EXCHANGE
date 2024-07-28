@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Pool = () => {
   return (
@@ -12,20 +13,26 @@ const Pool = () => {
                 <span className="text-sm text-gray-400">V2</span>
               </div>
               <div className="flex gap-3">
-                <button className="border border-[#d6b0342e] hover:border-[#d6b034f6] py-2 px-4 rounded-lg flex items-center justify-between">
+                <Link
+                  to="/add/v2"
+                  className="border border-[#d6b0342e] hover:border-[#d6b034f6] py-2 px-4 rounded-lg flex items-center justify-between"
+                >
                   <span className="text-base font-medium text-gold">
                     Create a pair
                   </span>
-                </button>
-                <button className="border border-[#98a1c014] bg-[#d6b034df] hover:bg-[#d6b034f6] active:bg-[#d6b034] py-2 px-4 rounded-lg flex items-center justify-between">
+                </Link>
+                <Link
+                  to="/add/v2"
+                  className="border border-[#98a1c014] bg-[#d6b034df] hover:bg-[#d6b034f6] active:bg-[#d6b034] py-2 px-4 rounded-lg flex items-center justify-between"
+                >
                   <span className="text-base font-medium">
                     Add V2 liquidity
                   </span>
-                </button>
+                </Link>
               </div>
             </div>
             <div className="p-4 border border-gray-400 mt-4 rounded-xl flex justify-center">
-                <p>No liquidity found.</p>
+              <p>No liquidity found.</p>
             </div>
           </div>
         </div>

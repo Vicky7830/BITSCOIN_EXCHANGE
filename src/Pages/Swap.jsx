@@ -3,7 +3,6 @@ import {
   KeyboardArrowDownOutlined,
 } from "@mui/icons-material";
 import React, { useState } from "react";
-import eth from "../assets/images/eth.png";
 import TokenSelect from "../Components/Modals/TokenSelect";
 import { formatCurrency } from "../Utils/currencyFormat";
 import { useMetaMask } from "../context/MetamaskContext";
@@ -11,11 +10,12 @@ import { useMetaMask } from "../context/MetamaskContext";
 const Swap = () => {
   const [openModal, setOpenModal] = useState(false);
   const [sellToken, setSellToken] = useState({
-    coinName: "Wrapped Bitcoin",
-    coinSymbol: "WBTC",
+    coinName: "Binance Coin",
+    coinSymbol: "BNB",
     price: 5375056.57,
-    coinImg:
-      "https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/ethereum/assets/0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599/logo.png",
+    coinImg: 'https://cryptologos.cc/logos/binance-coin-bnb-logo.png',
+    address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+    decimals: 18,
   });
   const [buyToken, setBuyToken] = useState("");
   const [sell, setSell] = useState("0");
