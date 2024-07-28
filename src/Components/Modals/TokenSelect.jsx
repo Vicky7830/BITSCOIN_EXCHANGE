@@ -1,7 +1,8 @@
 import { CloseOutlined, SearchOutlined } from "@mui/icons-material";
 import { Modal } from "flowbite-react";
 import React from "react";
-import { coinList } from "../../coinList.json";
+// import { tokenList } from "../../tokenList";
+import { tokenList } from "../../assets/tokenList";
 
 const TokenSelect = ({
   openModal,
@@ -55,7 +56,7 @@ const TokenSelect = ({
             </div>
             <div className="topCoins mt-3">
               <ul className="flex flex-wrap gap-x-3 gap-y-2">
-                {coinList.map((coin, index) => (
+                {tokenList.map((coin, index) => (
                   <li key={index}>
                     <button
                       className={`border border-[#98a1c014] hover:bg-[#1f1f20] active:bg-[#3a3a3c] p-1 pr-2 rounded-2xl flex items-center justify-between ${
@@ -85,7 +86,7 @@ const TokenSelect = ({
             <div className="popularCoins mt-4 pt-4 border-t border-gray-800">
               <h6 className="text-gray-400">Popular tokens</h6>
               <ul>
-                {coinList.map((coin, index) => (
+                {tokenList.map((coin, index) => (
                   <li className="mt-4" key={index}>
                     <button
                       className={`flex items-center gap-4 w-full hover:bg-[#1f1e1e] p-2 ${

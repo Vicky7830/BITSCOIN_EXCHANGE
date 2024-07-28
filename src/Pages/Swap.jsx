@@ -2,10 +2,11 @@ import {
   ArrowDownwardOutlined,
   KeyboardArrowDownOutlined,
 } from "@mui/icons-material";
+import React, { useState } from "react";
 import eth from "../assets/images/eth.png";
-import React, { useEffect, useState } from "react";
 import TokenSelect from "../Components/Modals/TokenSelect";
 import { formatCurrency } from "../Utils/currencyFormat";
+import { useMetaMask } from "../context/MetamaskContext";
 
 const Swap = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -20,6 +21,8 @@ const Swap = () => {
   const [sell, setSell] = useState("0");
   const [buy, setBuy] = useState("0");
   const [active, setActive] = useState("");
+
+  const { account, connectWallet } = useMetaMask();
 
   const handleSwap = () => {
     const temp = sellToken;
@@ -87,10 +90,7 @@ const Swap = () => {
                 </div>
               </div>
               <div className="pt-2 min-h-8">
-                <span
-                  className={`text-gray-400`}
-                  text-sm
-                >
+                <span className="text-gray-400 text-sm">
                   {sell > 0 && sellToken && formatCurrency(sell * sellToken.price)}
                 </span>
               </div>
@@ -155,18 +155,24 @@ const Swap = () => {
                 </div>
               </div>
               <div className="pt-2 min-h-8">
-              <span
-                  className={`text-gray-400`}
-                  text-sm
-                >
+                <span className="text-gray-400 text-sm">
                   {buy > 0 && buyToken && formatCurrency(buy * buyToken.price)}
                 </span>
               </div>
             </div>
             <div>
-              <button className="w-full mt-1 py-3 px-5 text-xl font-medium rounded-2xl bg-[#cead3f2d] text-gold hover:bg-[#cead3f58]  active:bg-[#cead3f7a]">
-                Connect Wallet
-              </button>
+              {account ? (
+                <button className="w-full mt-1 py-3 px-5 text-xl font-medium rounded-2xl bg-[#cead3f2d] text-gold hover:bg-[#cead3f58]  active:bg-[#cead3f7a]">
+                  Swap
+                </button>
+              ) : (
+                <button
+                  className="w-full mt-1 py-3 px-5 text-xl font-medium rounded-2xl bg-[#cead3f2d] text-gold hover:bg-[#cead3f58]  active:bg-[#cead3f7a]"
+                  onClick={connectWallet}
+                >
+                  Connect Wallet
+                </button>
+              )}
             </div>
           </div>
           <TokenSelect
