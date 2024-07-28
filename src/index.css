@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* .gold{
+    background-color: #ad974f;
+}
+.goldDark{
+    background-color: #8e793e;
+} */
+* {
+    transition: .3s;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+}
+body {
+    background-color: #141414;
+    color: #fff;
+}
+#modal div:nth-child(1) {
+ background: transparent;
+}
