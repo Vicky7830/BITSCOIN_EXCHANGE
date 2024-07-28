@@ -32,10 +32,12 @@ export const MetaMaskProvider = ({ children }) => {
                 // Request account access
                 const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
                 setAccount(accounts[0]);
+                console.log(accounts);
                 localStorage.setItem("account", accounts[0]);
 
                 // Check network chain ID
                 const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+                console.log(chainId);
                 if (chainId !== '0x61') {
                     // Prompt user to switch network
                     await window.ethereum.request({

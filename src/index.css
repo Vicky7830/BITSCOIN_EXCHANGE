@@ -21,3 +21,11 @@ body {
 #modal div:nth-child(1) {
  background: transparent;
 }
+.copyAdd .copyIcon{
+    opacity: 0;
+    visibility: hidden;
+}
+.copyAdd:hover .copyIcon{
+    opacity: 1;
+    visibility: visible;
+}
