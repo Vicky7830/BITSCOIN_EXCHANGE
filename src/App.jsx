@@ -6,6 +6,7 @@ import { MetaMaskProvider } from './context/MetamaskContext'
 import AddLiquidity from './Pages/AddLiquidity'
 
 function App() {
+  console.log("... test")
   const router = createBrowserRouter([
     {
       path: '/',
