@@ -26,11 +26,11 @@ const Header = () => {
     <>
       <header>
         <div className="container mx-auto">
-          <nav class="">
-            <div class="flex flex-wrap items-center justify-between mx-auto p-4">
+          <nav className="">
+            <div className="flex flex-wrap items-center justify-between mx-auto p-4">
               <div className="flex items-center gap-6">
                 <Link to="/">
-                  <span class="self-center text-2xl font-semibold text-gold">
+                  <span className="self-center text-2xl font-semibold text-gold">
                     BitsSwaps
                   </span>
                 </Link>
@@ -59,7 +59,7 @@ const Header = () => {
                   </li>
                 </ul>
               </div>
-              <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+              <div className="hidden w-full md:block md:w-auto" id="navbar-default">
                 <div className="flex items-center gap-2 items-center">
                   <div className="p-2">
                     <img
