@@ -16,7 +16,7 @@ export const tokenList = [
     coinSymbol: 'BNB',
     coinImg: 'https://cryptologos.cc/logos/binance-coin-bnb-logo.png',
     coinName: 'Binance Coin',
-    address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+    address: '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd',
     decimals: 18,
   },
   {

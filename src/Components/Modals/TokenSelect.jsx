@@ -3,29 +3,42 @@ import { Modal } from "flowbite-react";
 import React from "react";
 // import { tokenList } from "../../tokenList";
 import { tokenList } from "../../assets/tokenList";
+import { SET_TOKEN_VALUE, useSwapContext } from "../../context/SwapContext";
 
 const TokenSelect = ({
-  openModal,
-  setOpenModal,
+  show,
+  handleShow,
+  handleClose,
+
+  // openModal,
+  // setOpenModal,
   sellToken,
   buyToken,
   setSellToken,
   setBuyToken,
   active,
 }) => {
+  const { state, dispatch } = useSwapContext();
+
+  // const handleTokenSelect = (selectedToken) => {
+  //   if (active === "sell") {
+  //     if (selectedToken.coinSymbol === buyToken.coinSymbol) {
+  //       setBuyToken(sellToken);
+  //     }
+  //     setSellToken(selectedToken);
+  //   } else if (active === "buy") {
+  //     if (selectedToken.coinSymbol === sellToken.coinSymbol) {
+  //       setSellToken(buyToken);
+  //     }
+  //     setBuyToken(selectedToken);
+  //   }
+  //   setOpenModal(false);
+  // };
+
   const handleTokenSelect = (selectedToken) => {
-    if (active === "sell") {
-      if (selectedToken.coinSymbol === buyToken.coinSymbol) {
-        setBuyToken(sellToken);
-      }
-      setSellToken(selectedToken);
-    } else if (active === "buy") {
-      if (selectedToken.coinSymbol === sellToken.coinSymbol) {
-        setSellToken(buyToken);
-      }
-      setBuyToken(selectedToken);
-    }
-    setOpenModal(false);
+    debugger
+    dispatch({ type: SET_TOKEN_VALUE, payload: selectedToken });
+    handleClose();
   };
 
   return (
@@ -33,15 +46,15 @@ const TokenSelect = ({
       <Modal
         size="lg"
         dismissible
-        show={openModal}
-        onClose={() => setOpenModal(false)}
+        show={show}
+        onClose={handleClose}
         className="bg-black"
         id="modal"
       >
         <Modal.Body className="!bg-[#141414] rounded-lg p-4 border-[#b2bad626] border">
           <div className="flex justify-between">
             <h6>Select a token</h6>
-            <button onClick={() => setOpenModal(false)}>
+            <button onClick={handleClose}>
               <CloseOutlined />
             </button>
           </div>
@@ -56,12 +69,14 @@ const TokenSelect = ({
             </div>
             <div className="topCoins mt-3">
               <ul className="flex flex-wrap gap-x-3 gap-y-2">
-                {tokenList.slice(0,7).map((coin, index) => (
+                {tokenList.slice(0, 7).map((coin, index) => (
                   <li key={index}>
                     <button
                       className={`border border-[#98a1c014] hover:bg-[#1f1f20] active:bg-[#3a3a3c] p-1 pr-2 rounded-2xl flex items-center justify-between ${
-                        (active === "sell" && sellToken.coinSymbol === coin.coinSymbol) ||
-                        (active === "buy" && buyToken.coinSymbol === coin.coinSymbol)
+                        (active === "sell" &&
+                          sellToken.coinSymbol === coin.coinSymbol) ||
+                        (active === "buy" &&
+                          buyToken.coinSymbol === coin.coinSymbol)
                           ? "bg-[#1f1f20]"
                           : "bg-[#141414]"
                       }`}
@@ -90,8 +105,10 @@ const TokenSelect = ({
                   <li className="mt-4" key={index}>
                     <button
                       className={`flex items-center gap-4 w-full hover:bg-[#1f1e1e] p-2 ${
-                        (active === "sell" && sellToken.coinSymbol === coin.coinSymbol) ||
-                        (active === "buy" && buyToken.coinSymbol === coin.coinSymbol)
+                        (active === "sell" &&
+                          sellToken.coinSymbol === coin.coinSymbol) ||
+                        (active === "buy" &&
+                          buyToken.coinSymbol === coin.coinSymbol)
                           ? "opacity-40"
                           : "opacity-100"
                       }`}

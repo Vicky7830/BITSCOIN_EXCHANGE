@@ -6,15 +6,29 @@ import React, { useState } from "react";
 import TokenSelect from "../Components/Modals/TokenSelect";
 import { formatCurrency } from "../Utils/currencyFormat";
 import { useMetaMask } from "../context/MetamaskContext";
+import {
+  A_INPUT,
+  SET_ACTIVE_TOKEN,
+  SWAP_TOKENS,
+  TOKEN_A,
+  TOKEN_B,
+  useSwapContext,
+} from "../context/SwapContext";
 
 const Swap = () => {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const { state, dispatch, getSwapQuote } = useSwapContext();
+
   const [openModal, setOpenModal] = useState(false);
   const [sellToken, setSellToken] = useState({
     coinName: "Binance Coin",
     coinSymbol: "BNB",
     price: 5375056.57,
-    coinImg: 'https://cryptologos.cc/logos/binance-coin-bnb-logo.png',
-    address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+    coinImg: "https://cryptologos.cc/logos/binance-coin-bnb-logo.png",
+    address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
     decimals: 18,
   });
   const [buyToken, setBuyToken] = useState("");
@@ -25,9 +39,10 @@ const Swap = () => {
   const { account, connectWallet } = useMetaMask();
 
   const handleSwap = () => {
-    const temp = sellToken;
-    setSellToken(buyToken);
-    setBuyToken(temp);
+    dispatch({ type: SWAP_TOKENS });
+    // const temp = sellToken;
+    // setSellToken(buyToken);
+    // setBuyToken(temp);
   };
 
   return (
@@ -45,29 +60,44 @@ const Swap = () => {
                   <input
                     type="text"
                     placeholder="0"
+                    value={state.tokenAValue}
                     className="h-11 border-0 bg-transparent focus:outline-0 focus:border-0 focus:ring-0 px-0 text-4xl placeholder:text-gray-400 mt-1 py-0 w-full"
-                    onChange={(e) => setSell(e.target.value)}
+                    // onChange={(e) => setSell(e.target.value)}
+                    onChange={
+                      (e) => getSwapQuote(e.target.value)
+                      // dispatch({ type: A_INPUT, payload: e.target.value })
+                    }
                   />
                 </div>
                 <div className="inline-block">
-                  {sellToken ? (
+                  {true ? (
                     <button
                       className="border border-[#98a1c014] bg-[#141414] hover:bg-[#2c2c2e] active:bg-[#3a3a3c] p-1 pr-2 rounded-2xl flex items-center justify-between"
                       onClick={() => {
-                        setOpenModal(true);
-                        setActive("sell");
+                        dispatch({ type: SET_ACTIVE_TOKEN, payload: TOKEN_A });
+                        handleShow();
+                        // setOpenModal(true);
+                        // setActive("sell");
                       }}
                     >
                       <div className="flex items-center">
-                        <img
-                          src={sellToken.coinImg}
-                          alt=""
-                          width="24px"
-                          className="rounded-full"
-                        />
-                        <span className="text-xl font-medium mx-1 tracking-wide">
-                          {sellToken.coinSymbol}
-                        </span>
+                        {state?.tokenA ? (
+                          <>
+                            <img
+                              src={state.tokenA?.coinImg}
+                              alt=""
+                              width="24px"
+                              className="rounded-full"
+                            />
+                            <span className="text-xl font-medium mx-1 tracking-wide">
+                              {state.tokenA?.coinSymbol}
+                            </span>{" "}
+                          </>
+                        ) : (
+                          <span className="text-lg font-medium pl-2 pr-1 ">
+                            Select Token
+                          </span>
+                        )}
                       </div>
                       <KeyboardArrowDownOutlined className="" />
                     </button>
@@ -75,8 +105,11 @@ const Swap = () => {
                     <button
                       className="border border-[#98a1c014]  bg-[#d6b034df] hover:bg-[#d6b034f6] active:bg-[#d6b034] p-1 pr-2 rounded-2xl flex items-center justify-between"
                       onClick={() => {
-                        setOpenModal(true);
-                        setActive("sell");
+                        debugger;
+                        dispatch({ type: SET_ACTIVE_TOKEN, payload: TOKEN_B });
+                        handleShow();
+                        // setOpenModal(true);
+                        // setActive("sell");
                       }}
                     >
                       <div className="flex items-center">
@@ -91,7 +124,9 @@ const Swap = () => {
               </div>
               <div className="pt-2 min-h-8">
                 <span className="text-gray-400 text-sm">
-                  {sell > 0 && sellToken && formatCurrency(sell * sellToken.price)}
+                  {sell > 0 &&
+                    sellToken &&
+                    formatCurrency(sell * sellToken.price)}
                 </span>
               </div>
             </div>
@@ -110,29 +145,40 @@ const Swap = () => {
                   <input
                     type="text"
                     placeholder="0"
+                    value={state.tokenBValue}
                     className="h-11 border-0 bg-transparent focus:outline-0 focus:border-0 focus:ring-0 px-0 text-4xl placeholder:text-gray-400 mt-1 py-0 w-full"
-                    onChange={(e) => setBuy(e.target.value)}
+                    // onChange={(e) => setBuy(e.target.value)}
                   />
                 </div>
                 <div className="inline-block">
-                  {buyToken ? (
+                  {true ? (
                     <button
                       className="border border-[#98a1c014] bg-[#141414] hover:bg-[#2c2c2e] active:bg-[#3a3a3c] p-1 pr-2 rounded-2xl flex items-center justify-between"
                       onClick={() => {
-                        setOpenModal(true);
-                        setActive("buy");
+                        dispatch({ type: SET_ACTIVE_TOKEN, payload: TOKEN_B });
+                        handleShow();
+                        // setOpenModal(true);
+                        // setActive("buy");
                       }}
                     >
                       <div className="flex items-center">
-                        <img
-                          src={buyToken.coinImg}
-                          alt=""
-                          width="24px"
-                          className="rounded-full"
-                        />
-                        <span className="text-xl font-medium mx-1 tracking-wide">
-                          {buyToken.coinSymbol}
-                        </span>
+                        {state?.tokenB ? (
+                          <>
+                            <img
+                              src={state?.tokenB?.coinImg}
+                              alt=""
+                              width="24px"
+                              className="rounded-full"
+                            />
+                            <span className="text-xl font-medium mx-1 tracking-wide">
+                              {state?.tokenB?.coinSymbol}
+                            </span>
+                          </>
+                        ) : (
+                          <span className="text-lg font-medium pl-2 pr-1 ">
+                            Select Token
+                          </span>
+                        )}
                       </div>
                       <KeyboardArrowDownOutlined className="" />
                     </button>
@@ -176,8 +222,11 @@ const Swap = () => {
             </div>
           </div>
           <TokenSelect
-            openModal={openModal}
-            setOpenModal={setOpenModal}
+            show={show}
+            handleShow={handleShow}
+            handleClose={handleClose}
+            // openModal={openModal}
+            // setOpenModal={setOpenModal}
             sellToken={sellToken}
             buyToken={buyToken}
             setSellToken={setSellToken}
