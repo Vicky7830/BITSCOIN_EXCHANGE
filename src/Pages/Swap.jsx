@@ -28,7 +28,7 @@ const Swap = () => {
     coinSymbol: "BNB",
     price: 5375056.57,
     coinImg: "https://cryptologos.cc/logos/binance-coin-bnb-logo.png",
-    address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    address: "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
     decimals: 18,
   });
   const [buyToken, setBuyToken] = useState("");
