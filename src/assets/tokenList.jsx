@@ -9,7 +9,8 @@ export const tokenList = [
     coinSymbol: 'BTS',
     coinImg: bitscoin,
     coinName: 'BITSCOIN',
-    address: '0x269c4867bc193c043b3E02BC8D2Cc68088D21023',
+    // address: '0x269c4867bc193c043b3E02BC8D2Cc68088D21023',
+    address: '0x9A1628b2f0D8f183b72841cA9374049Eaa8d0eA0',  //testing
     decimals: 18,
   },
   {
