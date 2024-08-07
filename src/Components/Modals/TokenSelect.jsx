@@ -36,7 +36,6 @@ const TokenSelect = ({
   // };
 
   const handleTokenSelect = (selectedToken) => {
-    debugger
     dispatch({ type: SET_TOKEN_VALUE, payload: selectedToken });
     handleClose();
   };

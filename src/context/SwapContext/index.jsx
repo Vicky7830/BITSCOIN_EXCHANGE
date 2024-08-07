@@ -223,7 +223,7 @@ export const SwapProvider = ({ children }) => {
     const fee = await swappingContractInsatnce.chanrgedFee(actualAmount);
     const amountAfterFee = Number(actualAmount) + Number(fee);
     const currentAllowance = await calculateAllowance(tokenA_AddressInsatnce);
-    debugger
+
 
     if (Number(currentAllowance.toString()) >= amountAfterFee) {
       // swapExactEthToTokens(actualAmount, amountAfterFee.toString())

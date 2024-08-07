@@ -34,8 +34,7 @@ function App() {
     <MetaMaskProvider>
       <SwapProvider>
         <RouterProvider router={router} />
-        <SwapCode/>
-      </SwapProvider>
+       </SwapProvider>
     </MetaMaskProvider>
   );
 }
