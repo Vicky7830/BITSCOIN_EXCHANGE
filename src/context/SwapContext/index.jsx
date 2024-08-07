@@ -110,8 +110,7 @@ export const SwapProvider = ({ children }) => {
     dispatch({ type: A_INPUT, payload: value });
     const EtherToWei = ethers.utils.parseUnits(
       value,
-      // state.tokenA.decimals + ""
-      "18"
+      state.tokenA.decimals + ""
     );
     // const amountA = EtherToWei;
     const tokenA = state.tokenA.address;
@@ -133,6 +132,8 @@ export const SwapProvider = ({ children }) => {
     dispatch({ type: B_INPUT, payload: WeiToEther });
     console.log("WeiToEther: ", WeiToEther);
   };
+
+ 
 
   return (
     <SwapContext.Provider value={{ dispatch, state, getSwapQuote }}>
