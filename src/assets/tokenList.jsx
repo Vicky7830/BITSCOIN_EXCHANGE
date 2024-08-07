@@ -19,6 +19,7 @@ export const tokenList = [
     coinName: 'Binance Coin',
     address: '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd',
     decimals: 18,
+    isCoin: true
   },
   {
     coinSymbol: 'BRGT',
@@ -53,7 +54,7 @@ export const tokenList = [
     coinSymbol: 'USDT',
     coinImg: 'https://cdn.moralis.io/eth/0xdac17f958d2ee523a2206206994597c13d831ec7.png',
     coinName: 'Tether USD',
-    address: '0x55d398326f99059fF775485246999027B3197955',
+    address: '0xF352E4D29CDa25e1F89F5629Ba0FBf58D867A584',
     decimals: 18,
   },
   {
