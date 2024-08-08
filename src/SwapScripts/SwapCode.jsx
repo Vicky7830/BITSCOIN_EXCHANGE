@@ -5,7 +5,7 @@ import { ethers } from "ethers";
 
 export const SwapCode = () => {
   // const swappingContractAddress = "0x4c48775301a53dBD8BF6c361EA3Eb8beF95849c2";
-  const swappingContractAddress = "0xaE7378d4D09F578e919946789B414318c6d58D86";
+  const swappingContractAddress = "0x16FDd98F3fbc3aAe62A2EE7F6D5F3310046fB8cB";
   const functionCallerAddress = "0x98a9E141Da7814bFAe91bCe5920194af20cd65F5";
   const tokenBAddress = "0x9A1628b2f0D8f183b72841cA9374049Eaa8d0eA0"; //bitscoin
   const tokenA_address = "0xF352E4D29CDa25e1F89F5629Ba0FBf58D867A584"; //usdt

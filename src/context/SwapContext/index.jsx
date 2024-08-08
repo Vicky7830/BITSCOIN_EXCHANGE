@@ -6,7 +6,7 @@ import routerAbi from "../../enviornment/routerAbi.json";
 import bitscoin from "./../../assets/icon_new/Bitscoin.png.png";
 import { useMetaMask } from "../MetamaskContext";
 
-const swappingContractAddress = "0x4c48775301a53dBD8BF6c361EA3Eb8beF95849c2";
+const swappingContractAddress = "0x16FDd98F3fbc3aAe62A2EE7F6D5F3310046fB8cB";
 
 const SwapContext = createContext();
 
