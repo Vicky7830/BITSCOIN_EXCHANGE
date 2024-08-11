@@ -1,10 +1,17 @@
 import { ethers } from "ethers";
-import React, { createContext, useContext, useReducer, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
 import swapContractAbi from "../../enviornment/swapContractAbi.json";
 import commonTokenAbi from "../../enviornment/commonTokenAbi.json";
 import routerAbi from "../../enviornment/routerAbi.json";
 import bitscoin from "./../../assets/icon_new/Bitscoin.png.png";
 import { useMetaMask } from "../MetamaskContext";
+import { useCommonContext } from "../CommonContext";
 
 const swappingContractAddress = "0x4c48775301a53dBD8BF6c361EA3Eb8beF95849c2";
 
@@ -12,12 +19,6 @@ const SwapContext = createContext();
 
 export const useSwapContext = () => {
   return useContext(SwapContext);
-};
-
-const shortenHex = (hex) => {
-  const start = hex.slice(0, 6);
-  const end = hex.slice(-4);
-  return `${start}...${end}`;
 };
 
 export const SET_ACTIVE_TOKEN = "set_active_token";
@@ -103,9 +104,11 @@ function reducer(state, action) {
 
 export const SwapProvider = ({ children }) => {
   const { account } = useMetaMask();
+  const { setLoading } = useCommonContext();
   const [state, dispatch] = useReducer(reducer, intialState);
   const walletProvider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = walletProvider.getSigner();
+
 
   const swappingContractInsatnce = new ethers.Contract(
     swappingContractAddress,
@@ -216,14 +219,13 @@ export const SwapProvider = ({ children }) => {
   };
 
   const handleSwapToken = async () => {
-    const actualAmount = ethers.utils.parseUnits(
-      state.tokenAValue,
-      state.tokenA.decimals + ""
-    ).toString();
+    const actualAmount = ethers.utils
+      .parseUnits(state.tokenAValue, state.tokenA.decimals + "")
+      .toString();
     const fee = await swappingContractInsatnce.chanrgedFee(actualAmount);
     const amountAfterFee = Number(actualAmount) + Number(fee);
     const currentAllowance = await calculateAllowance(tokenA_AddressInsatnce);
-    debugger
+    debugger;
 
     if (Number(currentAllowance.toString()) >= amountAfterFee) {
       // swapExactEthToTokens(actualAmount, amountAfterFee.toString())
@@ -253,7 +255,9 @@ export const SwapProvider = ({ children }) => {
   };
 
   return (
-    <SwapContext.Provider value={{ dispatch, state, getSwapQuote, handleSwapToken }}>
+    <SwapContext.Provider
+      value={{ dispatch, state, getSwapQuote, handleSwapToken }}
+    >
       {children}
     </SwapContext.Provider>
   );

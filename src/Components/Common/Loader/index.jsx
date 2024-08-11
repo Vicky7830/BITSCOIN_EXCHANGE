@@ -1,9 +1,19 @@
-import React from 'react'
+import React from "react";
+import "./style.css";
+import { useCommonContext } from "../../../context/CommonContext";
 
 const Loader = () => {
-  return (
-    <div className='loader'></div>
-  )
-}
+  const { loading } = useCommonContext();
 
-export default Loader
+  return (
+    <>
+      {loading && (
+        <div className="loader-wrapper">
+          <div className="loader"></div>
+        </div>
+      )}
+    </>
+  );
+};
+
+export default Loader;

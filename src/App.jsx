@@ -6,6 +6,8 @@ import { MetaMaskProvider } from "./context/MetamaskContext";
 import AddLiquidity from "./Pages/AddLiquidity";
 import { SwapProvider } from "./context/SwapContext";
 import { SwapCode } from "./SwapScripts/SwapCode";
+import Loader from "./Components/Common/Loader";
+import { CommonProvider } from "./context/CommonContext";
 
 function App() {
   console.log("... test");
@@ -31,12 +33,15 @@ function App() {
   ]);
 
   return (
-    <MetaMaskProvider>
-      <SwapProvider>
-        <RouterProvider router={router} />
-        <SwapCode/>
-      </SwapProvider>
-    </MetaMaskProvider>
+    <CommonProvider>
+      <MetaMaskProvider>
+        <SwapProvider>
+          <RouterProvider router={router} />
+          <Loader />
+          <SwapCode />
+        </SwapProvider>
+      </MetaMaskProvider>
+    </CommonProvider>
   );
 }
 

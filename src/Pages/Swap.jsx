@@ -14,7 +14,6 @@ import {
   TOKEN_B,
   useSwapContext,
 } from "../context/SwapContext";
-import Loader from "../Components/Common/Loader";
 
 const Swap = () => {
   const [show, setShow] = useState(false);
@@ -48,7 +47,6 @@ const Swap = () => {
 
   return (
     <>
-    {/* <Loader /> */}
       <div className="pt-20">
         <div className="container mx-auto">
           <div className="max-w-[500px] mx-auto">
