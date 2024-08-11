@@ -7,15 +7,9 @@ import { SET_TOKEN_VALUE, useSwapContext } from "../../context/SwapContext";
 
 const TokenSelect = ({
   show,
-  handleShow,
   handleClose,
-
-  // openModal,
-  // setOpenModal,
   sellToken,
   buyToken,
-  setSellToken,
-  setBuyToken,
   active,
 }) => {
   const { state, dispatch } = useSwapContext();

@@ -71,62 +71,39 @@ const Swap = () => {
                     />
                   </div>
                   <div className="inline-block">
-                    {true ? (
-                      <button
-                        className="border border-[#98a1c014] bg-[#141414] hover:bg-[#2c2c2e] active:bg-[#3a3a3c] p-1 pr-2 rounded-2xl flex items-center justify-between"
-                        onClick={() => {
-                          dispatch({
-                            type: SET_ACTIVE_TOKEN,
-                            payload: TOKEN_A,
-                          });
-                          handleShow();
-                          // setOpenModal(true);
-                          // setActive("sell");
-                        }}
-                      >
-                        <div className="flex items-center">
-                          {state?.tokenA ? (
-                            <>
-                              <img
-                                src={state.tokenA?.coinImg}
-                                alt=""
-                                width="24px"
-                                className="rounded-full"
-                              />
-                              <span className="text-xl font-medium mx-1 tracking-wide">
-                                {state.tokenA?.coinSymbol}
-                              </span>{" "}
-                            </>
-                          ) : (
-                            <span className="text-lg font-medium pl-2 pr-1 ">
-                              Select Token
-                            </span>
-                          )}
-                        </div>
-                        <KeyboardArrowDownOutlined className="" />
-                      </button>
-                    ) : (
-                      <button
-                        className="border border-[#98a1c014]  bg-[#d6b034df] hover:bg-[#d6b034f6] active:bg-[#d6b034] p-1 pr-2 rounded-2xl flex items-center justify-between"
-                        onClick={() => {
-                          debugger;
-                          dispatch({
-                            type: SET_ACTIVE_TOKEN,
-                            payload: TOKEN_B,
-                          });
-                          handleShow();
-                          // setOpenModal(true);
-                          // setActive("sell");
-                        }}
-                      >
-                        <div className="flex items-center">
+                    <button
+                      className="border border-[#98a1c014] bg-[#141414] hover:bg-[#2c2c2e] active:bg-[#3a3a3c] p-1 pr-2 rounded-2xl flex items-center justify-between"
+                      onClick={() => {
+                        dispatch({
+                          type: SET_ACTIVE_TOKEN,
+                          payload: TOKEN_A,
+                        });
+                        handleShow();
+                        // setOpenModal(true);
+                        // setActive("sell");
+                      }}
+                    >
+                      <div className="flex items-center">
+                        {state?.tokenA ? (
+                          <>
+                            <img
+                              src={state.tokenA?.coinImg}
+                              alt=""
+                              width="24px"
+                              className="rounded-full"
+                            />
+                            <span className="text-xl font-medium mx-1 tracking-wide">
+                              {state.tokenA?.coinSymbol}
+                            </span>{" "}
+                          </>
+                        ) : (
                           <span className="text-lg font-medium pl-2 pr-1 ">
                             Select Token
                           </span>
-                        </div>
-                        <KeyboardArrowDownOutlined className="" />
-                      </button>
-                    )}
+                        )}
+                      </div>
+                      <KeyboardArrowDownOutlined className="" />
+                    </button>
                   </div>
                 </div>
                 <div className="pt-2 min-h-8">
@@ -158,56 +135,39 @@ const Swap = () => {
                     />
                   </div>
                   <div className="inline-block">
-                    {true ? (
-                      <button
-                        className="border border-[#98a1c014] bg-[#141414] hover:bg-[#2c2c2e] active:bg-[#3a3a3c] p-1 pr-2 rounded-2xl flex items-center justify-between"
-                        onClick={() => {
-                          dispatch({
-                            type: SET_ACTIVE_TOKEN,
-                            payload: TOKEN_B,
-                          });
-                          handleShow();
-                          // setOpenModal(true);
-                          // setActive("buy");
-                        }}
-                      >
-                        <div className="flex items-center">
-                          {state?.tokenB ? (
-                            <>
-                              <img
-                                src={state?.tokenB?.coinImg}
-                                alt=""
-                                width="24px"
-                                className="rounded-full"
-                              />
-                              <span className="text-xl font-medium mx-1 tracking-wide">
-                                {state?.tokenB?.coinSymbol}
-                              </span>
-                            </>
-                          ) : (
-                            <span className="text-lg font-medium pl-2 pr-1 ">
-                              Select Token
+                    <button
+                      className="border border-[#98a1c014] bg-[#141414] hover:bg-[#2c2c2e] active:bg-[#3a3a3c] p-1 pr-2 rounded-2xl flex items-center justify-between"
+                      onClick={() => {
+                        dispatch({
+                          type: SET_ACTIVE_TOKEN,
+                          payload: TOKEN_B,
+                        });
+                        handleShow();
+                        // setOpenModal(true);
+                        // setActive("buy");
+                      }}
+                    >
+                      <div className="flex items-center">
+                        {state?.tokenB ? (
+                          <>
+                            <img
+                              src={state?.tokenB?.coinImg}
+                              alt=""
+                              width="24px"
+                              className="rounded-full"
+                            />
+                            <span className="text-xl font-medium mx-1 tracking-wide">
+                              {state?.tokenB?.coinSymbol}
                             </span>
-                          )}
-                        </div>
-                        <KeyboardArrowDownOutlined className="" />
-                      </button>
-                    ) : (
-                      <button
-                        className="border border-[#98a1c014]  bg-[#d6b034df] hover:bg-[#d6b034f6] active:bg-[#d6b034] p-1 pr-2 rounded-2xl flex items-center justify-between"
-                        onClick={() => {
-                          setOpenModal(true);
-                          setActive("buy");
-                        }}
-                      >
-                        <div className="flex items-center">
+                          </>
+                        ) : (
                           <span className="text-lg font-medium pl-2 pr-1 ">
                             Select Token
                           </span>
-                        </div>
-                        <KeyboardArrowDownOutlined className="" />
-                      </button>
-                    )}
+                        )}
+                      </div>
+                      <KeyboardArrowDownOutlined className="" />
+                    </button>
                   </div>
                 </div>
                 <div className="pt-2 min-h-8">
@@ -240,12 +200,10 @@ const Swap = () => {
               show={show}
               handleShow={handleShow}
               handleClose={handleClose}
-              // openModal={openModal}
-              // setOpenModal={setOpenModal}
+              
               sellToken={sellToken}
               buyToken={buyToken}
-              setSellToken={setSellToken}
-              setBuyToken={setBuyToken}
+             
               active={active}
             />
           </div>

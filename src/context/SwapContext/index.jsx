@@ -109,7 +109,6 @@ export const SwapProvider = ({ children }) => {
   const walletProvider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = walletProvider.getSigner();
 
-
   const swappingContractInsatnce = new ethers.Contract(
     swappingContractAddress,
     swapContractAbi,
@@ -253,9 +252,119 @@ export const SwapProvider = ({ children }) => {
     }
   };
 
+  // pool functions   -> In this we don't have  concept of tokenA,B will work on bnb type tokens
+  const addPool = async () => {
+    if (
+      state.tokenA.coinSymbol === "BNB" ||
+      state.tokenB.coinSymbol === "BNB"
+    ) {
+      await addingEthLiquidity();
+    } else {
+      await addingTokenLiquidity();
+    }
+  };
+
+  async function addingEthLiquidity() {
+    let BNB_TOKEN;
+    let NON_BNB_TOKEN;
+    if (state.tokenA.coinSymbol === "BNB") {
+      BNB_TOKEN = {
+        ...state.tokenA,
+        value: state.tokenAValue,
+        instance: tokenA_AddressInsatnce,
+      };
+      NON_BNB_TOKEN = {
+        ...state.tokenB,
+        value: state.tokenBValue,
+        instance: tokenBAddressInsatnce,
+      };
+    } else {
+      BNB_TOKEN = {
+        ...state.tokenB,
+        value: state.tokenBValue,
+        instance: tokenBAddressInsatnce,
+      };
+      NON_BNB_TOKEN = {
+        ...state.tokenA,
+        value: state.tokenAValue,
+        instance: tokenA_AddressInsatnce,
+      };
+    }
+    debugger;
+    const actualAmount = ethers.utils.parseUnits(
+      BNB_TOKEN.value,
+      BNB_TOKEN.decimals
+    );
+    const Fee = await swappingContractInsatnce.chanrgedFee(actualAmount);
+    const amountAfterFee = Number(actualAmount) + Number(Fee);
+    const nonBNBActualAmount = ethers.utils.parseUnits(
+      NON_BNB_TOKEN.value,
+      NON_BNB_TOKEN.decimals
+    );
+    const currentAllowance = await calculateAllowance(NON_BNB_TOKEN.instance);
+    if (Number(currentAllowance.toString()) >= Number(nonBNBActualAmount)) {
+      const liquidityRes = await swappingContractInsatnce.addLiquidityETH(
+        NON_BNB_TOKEN.address,
+        nonBNBActualAmount,
+        actualAmount,
+        account,
+        { value: amountAfterFee.toString() }
+      ); //we are using quote value here (bitscoin)
+      console.log("liquidityRes: ", liquidityRes);
+    } else {
+      const approveData = await doApproval(NON_BNB_TOKEN.instance);
+      const liquidityRes = await swappingContractInsatnce.addLiquidityETH(
+        NON_BNB_TOKEN.address,
+        nonBNBActualAmount,
+        actualAmount,
+        account,
+        { value: amountAfterFee.toString() }
+      ); //we are using quote value here (bitscoin)
+      console.log("liquidityRes: ", liquidityRes);
+    }
+  }
+
+  async function addingTokenLiquidity() {
+    const token_A_Amount = ethers.utils.parseUnits(
+      state.tokenAValue,
+      state.tokenA.decimals
+    );
+    const token_B_Amount = ethers.utils.parseUnits(
+      state.tokenBValue,
+      state.tokenB.decimals
+    );
+    const currentTokenBAllowance = calculateAllowance(tokenBAddressInsatnce);
+    const currentTokenAAllowance = calculateAllowance(tokenA_AddressInsatnce);
+
+    if (
+      Number(currentTokenAAllowance.toString()) >= Number(token_A_Amount) &&
+      Number(currentTokenBAllowance.toString()) >= Number(token_B_Amount)
+    ) {
+      const liquidityTokenRes = await swappingContractInsatnce.addLiquidity(
+        state.tokenA.address,
+        state.tokenB.address,
+        state.tokenAValue,
+        state.tokenBValue,
+        account
+      ); //we are using quote value here (bitscoin)
+      console.log("liquidityTokenRes: ", liquidityTokenRes);
+    } else {
+      // const approveDataA = await doApproval(tokenA_AddressInsatnce);
+      // const approveData = await doApproval(tokenBAddressInsatnce);
+      const liquidityTokenRes = await swappingContractInsatnce.addLiquidity(
+        state.tokenA.address,
+        state.tokenB.address,
+        state.tokenAValue,
+        state.tokenBValue,
+        account
+      ); //we are using quote value here (bitscoin)
+      console.log("liquidityTokenRes: ", liquidityTokenRes);
+    }
+  }
+
   return (
     <SwapContext.Provider
-      value={{ dispatch, state, getSwapQuote, handleSwapToken }}
+      value={{ dispatch, state, getSwapQuote, handleSwapToken, addPool }}
     >
       {children}
     </SwapContext.Provider>

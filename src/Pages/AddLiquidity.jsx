@@ -7,8 +7,23 @@ import React, { useState } from "react";
 import TokenSelect from "../Components/Modals/TokenSelect";
 import { Link } from "react-router-dom";
 import { calculateToken } from "../Utils/calculateToken";
+import {
+  SET_ACTIVE_TOKEN,
+  TOKEN_A,
+  TOKEN_B,
+  useSwapContext,
+} from "../context/SwapContext";
+import { useMetaMask } from "../context/MetamaskContext";
 
 const AddLiquidity = () => {
+  const { account } = useMetaMask();
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const { state, dispatch, getSwapQuote, handleSwapToken, addPool } =
+    useSwapContext();
+
   const [openModal, setOpenModal] = useState(false);
   const [tokenA, setTokenA] = useState({
     coinName: "Binance Coin",
@@ -16,7 +31,7 @@ const AddLiquidity = () => {
     price: 5375056.57,
     coinImg: "https://cryptologos.cc/logos/binance-coin-bnb-logo.png",
     address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    decimals: 18
+    decimals: 18,
   });
   const [tokenB, setTokenB] = useState({
     coinName: "",
@@ -47,49 +62,49 @@ const AddLiquidity = () => {
                     <input
                       type="text"
                       placeholder="0"
-                      className="h-11 border-0 bg-transparent focus:outline-0 focus:border-0 focus:ring-0 px-0 text-4xl placeholder:text-gray-400 py-0 w-full"
-                      value={amountA}
-                      onChange={(e) => setAmountA(e.target.value)}
+                      value={state.tokenAValue}
+                      className="h-11 border-0 bg-transparent focus:outline-0 focus:border-0 focus:ring-0 px-0 text-4xl placeholder:text-gray-400 mt-1 py-0 w-full"
+                      // onChange={(e) => setSell(e.target.value)}
+                      onChange={
+                        (e) => getSwapQuote(e.target.value)
+                        // dispatch({ type: A_INPUT, payload: e.target.value })
+                      }
                     />
                   </div>
                   <div className="inline-block">
-                    {tokenA ? (
-                      <button
-                        className="border border-[#98a1c014] bg-[#141414] hover:bg-[#2c2c2e] active:bg-[#3a3a3c] p-1 pr-2 rounded-2xl flex items-center justify-between"
-                        onClick={() => {
-                          setOpenModal(true);
-                          setActive("sell");
-                        }}
-                      >
-                        <div className="flex items-center">
-                          <img
-                            src={tokenA.coinImg}
-                            alt=""
-                            width="24px"
-                            className="rounded-full"
-                          />
-                          <span className="text-xl font-medium mx-1 tracking-wide">
-                            {tokenA.coinSymbol}
-                          </span>
-                        </div>
-                        <KeyboardArrowDownOutlined className="" />
-                      </button>
-                    ) : (
-                      <button
-                        className="border border-[#98a1c014]  bg-[#d6b034df] hover:bg-[#d6b034f6] active:bg-[#d6b034] p-1 pr-2 rounded-2xl flex items-center justify-between"
-                        onClick={() => {
-                          setOpenModal(true);
-                          setActive("sell");
-                        }}
-                      >
-                        <div className="flex items-center">
+                    <button
+                      className="border border-[#98a1c014] bg-[#141414] hover:bg-[#2c2c2e] active:bg-[#3a3a3c] p-1 pr-2 rounded-2xl flex items-center justify-between"
+                      onClick={() => {
+                        dispatch({
+                          type: SET_ACTIVE_TOKEN,
+                          payload: TOKEN_A,
+                        });
+                        handleShow();
+                        // setOpenModal(true);
+                        // setActive("sell");
+                      }}
+                    >
+                      <div className="flex items-center">
+                        {state?.tokenA ? (
+                          <>
+                            <img
+                              src={state.tokenA?.coinImg}
+                              alt=""
+                              width="24px"
+                              className="rounded-full"
+                            />
+                            <span className="text-xl font-medium mx-1 tracking-wide">
+                              {state.tokenA?.coinSymbol}
+                            </span>{" "}
+                          </>
+                        ) : (
                           <span className="text-lg font-medium pl-2 pr-1 ">
                             Select Token
                           </span>
-                        </div>
-                        <KeyboardArrowDownOutlined className="" />
-                      </button>
-                    )}
+                        )}
+                      </div>
+                      <KeyboardArrowDownOutlined className="" />
+                    </button>
                   </div>
                 </div>
               </div>
@@ -102,49 +117,45 @@ const AddLiquidity = () => {
                     <input
                       type="text"
                       placeholder="0"
-                      className="h-11 border-0 bg-transparent focus:outline-0 focus:border-0 focus:ring-0 px-0 text-4xl placeholder:text-gray-400 py-0 w-full"
-                      value={amountB}
-                      onChange={(e) => setAmountB(e.target.value)}
+                      value={state.tokenBValue}
+                      className="h-11 border-0 bg-transparent focus:outline-0 focus:border-0 focus:ring-0 px-0 text-4xl placeholder:text-gray-400 mt-1 py-0 w-full"
+                      // onChange={(e) => setBuy(e.target.value)}
                     />
                   </div>
                   <div className="inline-block">
-                    {tokenB.coinSymbol ? (
-                      <button
-                        className="border border-[#98a1c014] bg-[#141414] hover:bg-[#2c2c2e] active:bg-[#3a3a3c] p-1 pr-2 rounded-2xl flex items-center justify-between"
-                        onClick={() => {
-                          setOpenModal(true);
-                          setActive("buy");
-                        }}
-                      >
-                        <div className="flex items-center">
-                          <img
-                            src={tokenB.coinImg}
-                            alt=""
-                            width="24px"
-                            className="rounded-full"
-                          />
-                          <span className="text-xl font-medium mx-1 tracking-wide">
-                            {tokenB.coinSymbol}
-                          </span>
-                        </div>
-                        <KeyboardArrowDownOutlined className="" />
-                      </button>
-                    ) : (
-                      <button
-                        className="border border-[#98a1c014]  bg-[#d6b034df] hover:bg-[#d6b034f6] active:bg-[#d6b034] p-1 pr-2 rounded-2xl flex items-center justify-between"
-                        onClick={() => {
-                          setOpenModal(true);
-                          setActive("buy");
-                        }}
-                      >
-                        <div className="flex items-center">
+                    <button
+                      className="border border-[#98a1c014] bg-[#141414] hover:bg-[#2c2c2e] active:bg-[#3a3a3c] p-1 pr-2 rounded-2xl flex items-center justify-between"
+                      onClick={() => {
+                        dispatch({
+                          type: SET_ACTIVE_TOKEN,
+                          payload: TOKEN_B,
+                        });
+                        handleShow();
+                        // setOpenModal(true);
+                        // setActive("buy");
+                      }}
+                    >
+                      <div className="flex items-center">
+                        {state?.tokenB ? (
+                          <>
+                            <img
+                              src={state?.tokenB?.coinImg}
+                              alt=""
+                              width="24px"
+                              className="rounded-full"
+                            />
+                            <span className="text-xl font-medium mx-1 tracking-wide">
+                              {state?.tokenB?.coinSymbol}
+                            </span>
+                          </>
+                        ) : (
                           <span className="text-lg font-medium pl-2 pr-1 ">
                             Select Token
                           </span>
-                        </div>
-                        <KeyboardArrowDownOutlined className="" />
-                      </button>
-                    )}
+                        )}
+                      </div>
+                      <KeyboardArrowDownOutlined className="" />
+                    </button>
                   </div>
                 </div>
               </div>
@@ -156,13 +167,21 @@ const AddLiquidity = () => {
                   <div className="p-5 rounded-2xl border border-[#b2bad626]">
                     <div className="flex justify-between items-center text-center">
                       <div>
-                        <p>{tokenB.price ? calculateToken(tokenB.price, tokenA.price) : 0}</p>
+                        <p>
+                          {tokenB.price
+                            ? calculateToken(tokenB.price, tokenA.price)
+                            : 0}
+                        </p>
                         <span className="text-sm text-gray-400 font-medium">
                           {tokenB.coinSymbol} per {tokenA.coinSymbol}
                         </span>
                       </div>
                       <div>
-                        <p>{tokenB.price ? calculateToken(tokenA.price, tokenB.price) : 0}</p>
+                        <p>
+                          {tokenB.price
+                            ? calculateToken(tokenA.price, tokenB.price)
+                            : 0}
+                        </p>
                         <span className="text-sm text-gray-400 font-medium">
                           {tokenA.coinSymbol} per {tokenB.coinSymbol}
                         </span>
@@ -179,20 +198,29 @@ const AddLiquidity = () => {
               )}
             </div>
             <div className="mt-5">
-              <button className="w-full py-4 px-5 text-xl font-medium rounded-2xl bg-[#cead3f2d] text-gold hover:bg-[#cead3f58]  active:bg-[#cead3f7a]">
-                Connect Wallet
-              </button>
+              {account ? (
+                <button onClick={addPool} className="w-full py-4 px-5 text-xl font-medium rounded-2xl bg-[#cead3f2d] text-gold hover:bg-[#cead3f58]  active:bg-[#cead3f7a]">
+                  Add
+                </button>
+              ) : (
+                <button className="w-full py-4 px-5 text-xl font-medium rounded-2xl bg-[#cead3f2d] text-gold hover:bg-[#cead3f58]  active:bg-[#cead3f7a]">
+                  Connect Wallet
+                </button>
+              )}
             </div>
           </div>
         </div>
       </div>
       <TokenSelect
-        openModal={openModal}
-        setOpenModal={setOpenModal}
-        sellToken={tokenA}
-        buyToken={tokenB}
-        setSellToken={setTokenA}
-        setBuyToken={setTokenB}
+        show={show}
+        handleShow={handleShow}
+        handleClose={handleClose}
+        // openModal={openModal}
+        // setOpenModal={setOpenModal}
+        // sellToken={sellToken}
+        // buyToken={buyToken}
+        // setSellToken={setSellToken}
+        // setBuyToken={setBuyToken}
         active={active}
       />
     </div>

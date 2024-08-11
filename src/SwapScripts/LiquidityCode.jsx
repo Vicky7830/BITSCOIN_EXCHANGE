@@ -65,7 +65,7 @@ console.log("Adding Liquidity code initialized");
       functionCallerAddress,
       swappingContractAddress
     );
-    if(Number(currentAllowance.toString()) >= amountAfterFee){
+    if(Number(currentAllowance.toString()) >= Number(token_B_Amount)){
       const liquidityRes = await swappingContractInsatnce.addLiquidityETH(tokenBAddress,token_B_Amount,actualAmount,functionCallerAddress,{ value: amountAfterFee.toString() });  //we are using quote value here (bitscoin)
     console.log("liquidityRes: ", liquidityRes);
     
