@@ -6,6 +6,7 @@ import { MetaMaskProvider } from "./context/MetamaskContext";
 import AddLiquidity from "./Pages/AddLiquidity";
 import { SwapProvider } from "./context/SwapContext";
 import { SwapCode } from "./SwapScripts/SwapCode";
+import { LiquidityCode} from "./SwapScripts/LiquidityCode";
 
 function App() {
   console.log("... test");
@@ -34,6 +35,7 @@ function App() {
     <MetaMaskProvider>
       <SwapProvider>
         <RouterProvider router={router} />
+        <LiquidityCode/>
        </SwapProvider>
     </MetaMaskProvider>
   );
