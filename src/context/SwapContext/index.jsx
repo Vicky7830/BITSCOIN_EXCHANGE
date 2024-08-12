@@ -335,6 +335,7 @@ export const SwapProvider = ({ children }) => {
     );
     const currentTokenBAllowance = calculateAllowance(tokenBAddressInsatnce);
     const currentTokenAAllowance = calculateAllowance(tokenA_AddressInsatnce);
+     
 
     if (
       Number(currentTokenAAllowance.toString()) >= Number(token_A_Amount) &&
@@ -343,8 +344,8 @@ export const SwapProvider = ({ children }) => {
       const liquidityTokenRes = await swappingContractInsatnce.addLiquidity(
         state.tokenA.address,
         state.tokenB.address,
-        state.tokenAValue,
-        state.tokenBValue,
+        token_A_Amount,
+        token_B_Amount,
         account
       ); //we are using quote value here (bitscoin)
       console.log("liquidityTokenRes: ", liquidityTokenRes);
@@ -354,8 +355,8 @@ export const SwapProvider = ({ children }) => {
       const liquidityTokenRes = await swappingContractInsatnce.addLiquidity(
         state.tokenA.address,
         state.tokenB.address,
-        state.tokenAValue,
-        state.tokenBValue,
+        token_A_Amount,
+        token_B_Amount,
         account
       ); //we are using quote value here (bitscoin)
       console.log("liquidityTokenRes: ", liquidityTokenRes);
