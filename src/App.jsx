@@ -8,6 +8,7 @@ import { SwapProvider } from "./context/SwapContext";
 import { SwapCode } from "./SwapScripts/SwapCode";
 import Loader from "./Components/Common/Loader";
 import { CommonProvider } from "./context/CommonContext";
+import { SearchTokenData } from "./SwapScripts/SearchTokenData";
 
 function App() {
   console.log("... test");
@@ -38,7 +39,7 @@ function App() {
         <SwapProvider>
           <RouterProvider router={router} />
           <Loader />
-          <SwapCode />
+          <SearchTokenData/>
         </SwapProvider>
       </MetaMaskProvider>
     </CommonProvider>
