@@ -1,33 +1,68 @@
+import { ethers } from "ethers";
+
 import { CloseOutlined, SearchOutlined } from "@mui/icons-material";
 import { Modal } from "flowbite-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 // import { tokenList } from "../../tokenList";
-import { tokenList } from "../../assets/tokenList";
+import { tokenList as staticTokens } from "../../assets/tokenList";
 import { SET_TOKEN_VALUE, useSwapContext } from "../../context/SwapContext";
+import commonTokenAbi from "./../../enviornment/commonTokenAbi.json";
 
-const TokenSelect = ({
-  show,
-  handleClose,
-  sellToken,
-  buyToken,
-  active,
-}) => {
+const TokenSelect = ({ show, handleClose, sellToken, buyToken, active }) => {
   const { state, dispatch } = useSwapContext();
+  const [tokenList, setTokenList] = useState(staticTokens);
 
-  // const handleTokenSelect = (selectedToken) => {
-  //   if (active === "sell") {
-  //     if (selectedToken.coinSymbol === buyToken.coinSymbol) {
-  //       setBuyToken(sellToken);
-  //     }
-  //     setSellToken(selectedToken);
-  //   } else if (active === "buy") {
-  //     if (selectedToken.coinSymbol === sellToken.coinSymbol) {
-  //       setSellToken(buyToken);
-  //     }
-  //     setBuyToken(selectedToken);
-  //   }
-  //   setOpenModal(false);
-  // };
+  const [tokenAddress, setTokenAddress] = useState("");
+
+  const walletProvider = new ethers.providers.Web3Provider(window.ethereum);
+  const signer = walletProvider.getSigner();
+
+  const handleInputTokenAddress = async () => {
+    // setContractAddress(e.target.value);
+    // console.log("contractAddress:", contractAddress);
+
+    const contractData = await walletProvider.getCode(tokenAddress);
+    console.log("contractData:", contractData);
+
+    if (contractData === "0x") {
+      console.log("Invalid Token address");
+    } else {
+      // setIsToken(true);
+      console.log("Valid Token address");
+      const newTokenInstance = new ethers.Contract(
+        // e.target.value,
+        tokenAddress,
+        commonTokenAbi,
+        signer
+      );
+      const tokenName = await newTokenInstance.name();
+      const tokenSymbol = await newTokenInstance.symbol();
+      const tokenDecimals = await newTokenInstance.decimals();
+      // setTokenDetails({
+      //   name: tokenName,
+      //   symbol: tokenSymbol,
+      //   decimals: tokenDecimals,
+      // });
+      console.log(tokenName, ">>>>>", tokenSymbol, ">>>>>>>", tokenDecimals);
+      setTokenList((prev) => [
+        {
+          coinSymbol: tokenSymbol,
+          coinImg: "",
+          coinName: tokenName,
+          // address: '0x269c4867bc193c043b3E02BC8D2Cc68088D21023',
+          address: tokenAddress, //testing
+          decimals: tokenDecimals,
+        },
+        ...prev,
+      ]);
+    }
+  };
+
+  useEffect(() => {
+    if (tokenAddress) {
+      handleInputTokenAddress();
+    }
+  }, [tokenAddress]);
 
   const handleTokenSelect = (selectedToken) => {
     dispatch({ type: SET_TOKEN_VALUE, payload: selectedToken });
@@ -56,6 +91,7 @@ const TokenSelect = ({
               <SearchOutlined />
               <input
                 type="text"
+                onChange={(e) => setTokenAddress(e.target.value)}
                 placeholder="Search name or paste address"
                 className="border-none bg-transparent focus:outline-0 focus:border-0 focus:ring-0 w-full"
               />
