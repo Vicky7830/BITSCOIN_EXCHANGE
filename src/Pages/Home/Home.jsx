@@ -29,7 +29,7 @@ const Home = () => {
             <div className={`${as.Intro_SubContainer1_btn_container}  `}>
               <button
                 className={as.Intro_SubContainer1_btn}
-                onClick={() => navigate("/Exchange")}
+                onClick={() => navigate("/swap")}
               >
                 Trade Now
               </button>

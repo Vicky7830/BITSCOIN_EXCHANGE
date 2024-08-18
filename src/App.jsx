@@ -44,7 +44,6 @@ function App() {
         <SwapProvider>
           <RouterProvider router={router} />
           <Loader />
-          <SearchTokenData />
         </SwapProvider>
       </MetaMaskProvider>
     </CommonProvider>
