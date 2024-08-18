@@ -14,6 +14,7 @@ import {
   TOKEN_B,
   useSwapContext,
 } from "../context/SwapContext";
+import as from "./Bg.module.css"
 
 const Swap = () => {
   const [show, setShow] = useState(false);
@@ -47,7 +48,7 @@ const Swap = () => {
 
   return (
     <>
-      <div className="pt-20">
+      <div className={`${as.ExchangeCont} py-20`}>
         <div className="container mx-auto">
           <div className="max-w-[500px] mx-auto">
             <h4 className="px-5 py-2 bg-[#1f1e1e] w-fit rounded-[20px] tracking-wide font-medium">

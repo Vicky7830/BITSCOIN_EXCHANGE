@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import as from "./Bg.module.css"
 
 const Pool = () => {
   return (
-    <div className="pt-20">
+    <div className={`${as.ExchangeCont} py-20`}>
       <div className="container mx-auto">
         <div className="max-w-[600px] mx-auto">
           <div>

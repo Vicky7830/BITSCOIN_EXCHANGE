@@ -14,6 +14,7 @@ import {
   useSwapContext,
 } from "../context/SwapContext";
 import { useMetaMask } from "../context/MetamaskContext";
+import as from "./Bg.module.css"
 
 const AddLiquidity = () => {
   const { account } = useMetaMask();
@@ -44,7 +45,7 @@ const AddLiquidity = () => {
   const [active, setActive] = useState("");
 
   return (
-    <div className="pt-20">
+    <div className={`${as.ExchangeCont} py-20`}>
       <div className="container mx-auto">
         <div className="max-w-[450px] mx-auto">
           <div className="border border-gray-600 rounded-2xl p-4">

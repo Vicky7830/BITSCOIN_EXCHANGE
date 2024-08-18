@@ -24,7 +24,7 @@ const Header = () => {
 
   return (
     <>
-      <header>
+      <header className="bg-[#141414]">
         <div className="container mx-auto">
           <nav className="">
             <div className="flex flex-wrap items-center justify-between mx-auto p-4">
@@ -34,7 +34,7 @@ const Header = () => {
                     BitsSwaps
                   </span>
                 </Link>
-                <ul className="flex gap-3">
+                <ul className="flex gap-3 mb-0">
                   <li>
                     <NavLink
                       to="/swap"
