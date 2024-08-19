@@ -6,7 +6,7 @@ import commonTokenAbi from "../enviornment/commonTokenAbi.json";
 export const LiquidityCode = () => {
 console.log("Adding Liquidity code initialized");
 
-  const swappingContractAddress = "0x16FDd98F3fbc3aAe62A2EE7F6D5F3310046fB8cB";
+  const swappingContractAddress = "0xEAbF2BC47547F75Eff162C00b291F43A425781B8";
   const functionCallerAddress = "0x98a9E141Da7814bFAe91bCe5920194af20cd65F5";  //caller wallet address
   const tokenBAddress = "0x9A1628b2f0D8f183b72841cA9374049Eaa8d0eA0"; //bitscoin
   const tokenA_address = "0xF352E4D29CDa25e1F89F5629Ba0FBf58D867A584"; //usdt
@@ -57,7 +57,7 @@ console.log("Adding Liquidity code initialized");
      
     console.log("actualAmount: ", actualAmount.toString());
 
-    const Fee = await swappingContractInsatnce.chanrgedFee(actualAmount);
+    const Fee = await swappingContractInsatnce.chargedFee(actualAmount);
     console.log("Fee",Fee);
     const amountAfterFee = Number(actualAmount) + Number(Fee);
     const token_B_Amount = ethers.utils.parseUnits("10", "18");

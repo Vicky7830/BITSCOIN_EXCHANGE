@@ -1,4 +1,4 @@
-import { ethers } from "ethers";
+import { ethers, providers } from "ethers";
 import React, {
   createContext,
   useContext,
@@ -13,7 +13,7 @@ import bitscoin from "./../../assets/icon_new/Bitscoin.png.png";
 import { useMetaMask } from "../MetamaskContext";
 import { useCommonContext } from "../CommonContext";
 
-const swappingContractAddress = "0x16FDd98F3fbc3aAe62A2EE7F6D5F3310046fB8cB";
+const swappingContractAddress = "0xEAbF2BC47547F75Eff162C00b291F43A425781B8";
 
 const SwapContext = createContext();
 
@@ -122,7 +122,7 @@ export const SwapProvider = ({ children }) => {
   );
 
   const tokenBAddressInsatnce = new ethers.Contract(
-    state.tokenA.address,
+    state.tokenB.address,
     commonTokenAbi,
     signer
   );
@@ -209,10 +209,16 @@ export const SwapProvider = ({ children }) => {
 
   const calculateAllowance = async (tokenInstaknce) => {
     const functionCallerAddress = account;
+    console.log("tokenInstaknce:",tokenInstaknce);
+    console.log("swappingContractAddress:",swappingContractAddress);
+    
+    
     const currentAllowance = await tokenInstaknce.allowance(
       functionCallerAddress,
       swappingContractAddress
     );
+    console.log("currentAllowance: ", currentAllowance);
+    
 
     return currentAllowance;
   };
@@ -221,7 +227,7 @@ export const SwapProvider = ({ children }) => {
     const actualAmount = ethers.utils
       .parseUnits(state.tokenAValue, state.tokenA.decimals + "")
       .toString();
-    const fee = await swappingContractInsatnce.chanrgedFee(actualAmount);
+    const fee = await swappingContractInsatnce.chargedFee(actualAmount);
     const amountAfterFee = Number(actualAmount) + Number(fee);
     const currentAllowance = await calculateAllowance(tokenA_AddressInsatnce);
 
@@ -290,35 +296,51 @@ export const SwapProvider = ({ children }) => {
         instance: tokenA_AddressInsatnce,
       };
     }
-    debugger;
     const actualAmount = ethers.utils.parseUnits(
       BNB_TOKEN.value,
       BNB_TOKEN.decimals
     );
-    const Fee = await swappingContractInsatnce.chanrgedFee(actualAmount);
+    console.log(state.tokenA);
+    
+    const Fee = await swappingContractInsatnce.chargedFee(actualAmount);
     const amountAfterFee = Number(actualAmount) + Number(Fee);
     const nonBNBActualAmount = ethers.utils.parseUnits(
       NON_BNB_TOKEN.value,
       NON_BNB_TOKEN.decimals
     );
+
+    console.log("check addr : ", NON_BNB_TOKEN.address);
+    console.log("NON_BNB_TOKEN.instance: ",NON_BNB_TOKEN.instance);
+    
+    
     const currentAllowance = await calculateAllowance(NON_BNB_TOKEN.instance);
+ const expectedGasLimit = await walletProvider.getGasPrice()
+ console.log("expectedGasLimit:",expectedGasLimit.toString());
+ 
+    
+     console.log("currentAllowance: ", currentAllowance.toString() , " and token amount is ",Number(nonBNBActualAmount) );
+     
     if (Number(currentAllowance.toString()) >= Number(nonBNBActualAmount)) {
+      
+       
       const liquidityRes = await swappingContractInsatnce.addLiquidityETH(
         NON_BNB_TOKEN.address,
         nonBNBActualAmount,
         actualAmount,
         account,
-        { value: amountAfterFee.toString() }
+        { value: amountAfterFee.toString() , gasLimit: 6000000}
       ); //we are using quote value here (bitscoin)
       console.log("liquidityRes: ", liquidityRes);
     } else {
-      const approveData = await doApproval(NON_BNB_TOKEN.instance);
+      console.log("enter in else ");
+      
+       const approveData = await doApproval(NON_BNB_TOKEN.instance);
       const liquidityRes = await swappingContractInsatnce.addLiquidityETH(
         NON_BNB_TOKEN.address,
         nonBNBActualAmount,
         actualAmount,
         account,
-        { value: amountAfterFee.toString() }
+        { value: amountAfterFee.toString() , gasLimit: 6000000 }
       ); //we are using quote value here (bitscoin)
       console.log("liquidityRes: ", liquidityRes);
     }
