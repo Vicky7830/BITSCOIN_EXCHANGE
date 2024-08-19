@@ -14,7 +14,7 @@ import {
   useSwapContext,
 } from "../context/SwapContext";
 import { useMetaMask } from "../context/MetamaskContext";
-import as from "./Bg.module.css"
+import as from "./Bg.module.css";
 
 const AddLiquidity = () => {
   const { account } = useMetaMask();
@@ -22,8 +22,15 @@ const AddLiquidity = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const { state, dispatch, getSwapQuote, handleSwapToken, addPool } =
-    useSwapContext();
+  const {
+    state,
+    dispatch,
+    getSwapQuote,
+    handleSwapToken,
+    addPool,
+    pairError,
+    setTokenBValue,
+  } = useSwapContext();
 
   const [openModal, setOpenModal] = useState(false);
   const [tokenA, setTokenA] = useState({
@@ -120,7 +127,11 @@ const AddLiquidity = () => {
                       placeholder="0"
                       value={state.tokenBValue}
                       className="h-11 border-0 bg-transparent focus:outline-0 focus:border-0 focus:ring-0 px-0 text-4xl placeholder:text-gray-400 mt-1 py-0 w-full"
-                      // onChange={(e) => setBuy(e.target.value)}
+                      onChange={(e) => {
+                        if (pairError) {
+                          setTokenBValue(e.target.value);
+                        }
+                      }}
                     />
                   </div>
                   <div className="inline-block">
@@ -200,8 +211,11 @@ const AddLiquidity = () => {
             </div>
             <div className="mt-5">
               {account ? (
-                <button onClick={addPool} className="w-full py-4 px-5 text-xl font-medium rounded-2xl bg-[#cead3f2d] text-gold hover:bg-[#cead3f58]  active:bg-[#cead3f7a]">
-                  Add
+                <button
+                  onClick={addPool}
+                  className="w-full py-4 px-5 text-xl font-medium rounded-2xl bg-[#cead3f2d] text-gold hover:bg-[#cead3f58]  active:bg-[#cead3f7a]"
+                >
+                  {pairError ? "Create pair & add liquidity" : "Add"}
                 </button>
               ) : (
                 <button className="w-full py-4 px-5 text-xl font-medium rounded-2xl bg-[#cead3f2d] text-gold hover:bg-[#cead3f58]  active:bg-[#cead3f7a]">

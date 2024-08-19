@@ -108,6 +108,7 @@ export const SwapProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, intialState);
   const walletProvider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = walletProvider.getSigner();
+  const [pairError, setPairError] = useState(false);
 
   const swappingContractInsatnce = new ethers.Contract(
     swappingContractAddress,
@@ -130,29 +131,44 @@ export const SwapProvider = ({ children }) => {
   console.log(swappingContractInsatnce, ">>>>> swappingContractInsatnce");
 
   const getSwapQuote = async (value) => {
-    dispatch({ type: A_INPUT, payload: value });
-    const EtherToWei = ethers.utils.parseUnits(
-      value,
-      state.tokenA.decimals + ""
-    );
-    // const amountA = EtherToWei;
-    const tokenA = state.tokenA.address;
-    const tokenB = state.tokenB.address;
+    try {
+      // setPairError(false)
+      dispatch({ type: A_INPUT, payload: value });
+      const EtherToWei = ethers.utils.parseUnits(
+        value,
+        state.tokenA.decimals + ""
+      );
+      // const amountA = EtherToWei;
+      const tokenA = state.tokenA.address;
+      const tokenB = state.tokenB.address;
 
-    const quotedValue = await swappingContractInsatnce.quote(
-      EtherToWei,
-      tokenA,
-      tokenB
-    );
-    // debugger
+      const quotedValue = await swappingContractInsatnce.quote(
+        EtherToWei,
+        tokenA,
+        tokenB
+      );
+      // debugger
 
-    console.log(quotedValue.toString());
-    const WeiToEther = ethers.utils.formatUnits(
-      quotedValue.toString(),
-      state.tokenB.decimals + ""
-    );
-    dispatch({ type: B_INPUT, payload: WeiToEther });
-    console.log("WeiToEther: ", WeiToEther);
+      console.log(quotedValue.toString());
+      const WeiToEther = ethers.utils.formatUnits(
+        quotedValue.toString(),
+        state.tokenB.decimals + ""
+      );
+      dispatch({ type: B_INPUT, payload: WeiToEther });
+      console.log("WeiToEther: ", WeiToEther);
+    } catch (error) {
+      if (error.reason == "Pair does not exist") {
+        console.log("ERROR WHILE GETTING QUOTE ----> ", error.reason);
+        setPairError(true);
+      }
+      // debugger
+
+      // console.log(error.reason, "ERROR WHILE GETTING QUOT1E", error, ">>>>>>>>>>>>>>>>>>>>>>>>>", error.code)
+    }
+  };
+
+  const setTokenBValue = (value) => {
+    dispatch({ type: B_INPUT, payload: value });
   };
 
   const swapExactEthToTokens = async (actualAmount, amountAfterFee) => {
@@ -209,57 +225,63 @@ export const SwapProvider = ({ children }) => {
 
   const calculateAllowance = async (tokenInstaknce) => {
     const functionCallerAddress = account;
-    console.log("tokenInstaknce:",tokenInstaknce);
-    console.log("swappingContractAddress:",swappingContractAddress);
-    
-    
+    console.log("tokenInstaknce:", tokenInstaknce);
+    console.log("swappingContractAddress:", swappingContractAddress);
+
     const currentAllowance = await tokenInstaknce.allowance(
       functionCallerAddress,
       swappingContractAddress
     );
     console.log("currentAllowance: ", currentAllowance);
-    
 
     return currentAllowance;
   };
 
   const handleSwapToken = async () => {
-    const actualAmount = ethers.utils
-      .parseUnits(state.tokenAValue, state.tokenA.decimals + "")
-      .toString();
-    const fee = await swappingContractInsatnce.chargedFee(actualAmount);
-    const amountAfterFee = Number(actualAmount) + Number(fee);
-    const currentAllowance = await calculateAllowance(tokenA_AddressInsatnce);
+    try {
+      setLoading(true);
+      const actualAmount = ethers.utils
+        .parseUnits(state.tokenAValue, state.tokenA.decimals + "")
+        .toString();
+      const fee = await swappingContractInsatnce.chargedFee(actualAmount);
+      const amountAfterFee = Number(actualAmount) + Number(fee);
+      const currentAllowance = await calculateAllowance(tokenA_AddressInsatnce);
 
-    if (Number(currentAllowance.toString()) >= amountAfterFee) {
-      // swapExactEthToTokens(actualAmount, amountAfterFee.toString())
-      // swapEthToExactTokens(amountOut, amountAfterFee.toString());
-      if (state.tokenA.isCoin) {
-        swapExactEthToTokens(actualAmount, amountAfterFee);
-      } else if (state.tokenB.isCoin) {
-        swapExactTokenToEth(actualAmount);
+      if (Number(currentAllowance.toString()) >= amountAfterFee) {
+        // swapExactEthToTokens(actualAmount, amountAfterFee.toString())
+        // swapEthToExactTokens(amountOut, amountAfterFee.toString());
+        if (state.tokenA.isCoin) {
+          await swapExactEthToTokens(actualAmount, amountAfterFee);
+        } else if (state.tokenB.isCoin) {
+          await swapExactTokenToEth(actualAmount);
+        } else {
+          // both are token
+          await swapExactTokenToToken(actualAmount);
+        }
       } else {
-        // both are token
-        swapExactTokenToToken(actualAmount);
-      }
-    } else {
-      const approveData = await doApproval(tokenA_AddressInsatnce);
-      // swapExactEthToTokens(actualAmount, amountAfterFee.toString())
-      // swapEthToExactTokens(amountOut, amountAfterFee.toString());
+        const approveData = await doApproval(tokenA_AddressInsatnce);
+        // swapExactEthToTokens(actualAmount, amountAfterFee.toString())
+        // swapEthToExactTokens(amountOut, amountAfterFee.toString());
 
-      if (state.tokenA.isCoin) {
-        swapExactEthToTokens(actualAmount, amountAfterFee);
-      } else if (state.tokenB.isCoin) {
-        swapExactTokenToEth(actualAmount);
-      } else {
-        // both are token
-        swapExactTokenToToken(actualAmount);
+        if (state.tokenA.isCoin) {
+          await swapExactEthToTokens(actualAmount, amountAfterFee);
+        } else if (state.tokenB.isCoin) {
+          await swapExactTokenToEth(actualAmount);
+        } else {
+          // both are token
+          await swapExactTokenToToken(actualAmount);
+        }
       }
+      setLoading(false);
+    } catch (error) {
+      console.log(error, " HANDLE SWAOPP TOKEN ERROR ")
+      setLoading(false);
     }
   };
 
   // pool functions   -> In this we don't have  concept of tokenA,B will work on bnb type tokens
   const addPool = async () => {
+    setLoading(true);
     if (
       state.tokenA.coinSymbol === "BNB" ||
       state.tokenB.coinSymbol === "BNB"
@@ -268,6 +290,7 @@ export const SwapProvider = ({ children }) => {
     } else {
       await addingTokenLiquidity();
     }
+    setLoading(false);
   };
 
   async function addingEthLiquidity() {
@@ -301,7 +324,7 @@ export const SwapProvider = ({ children }) => {
       BNB_TOKEN.decimals
     );
     console.log(state.tokenA);
-    
+
     const Fee = await swappingContractInsatnce.chargedFee(actualAmount);
     const amountAfterFee = Number(actualAmount) + Number(Fee);
     const nonBNBActualAmount = ethers.utils.parseUnits(
@@ -310,37 +333,38 @@ export const SwapProvider = ({ children }) => {
     );
 
     console.log("check addr : ", NON_BNB_TOKEN.address);
-    console.log("NON_BNB_TOKEN.instance: ",NON_BNB_TOKEN.instance);
-    
-    
+    console.log("NON_BNB_TOKEN.instance: ", NON_BNB_TOKEN.instance);
+
     const currentAllowance = await calculateAllowance(NON_BNB_TOKEN.instance);
- const expectedGasLimit = await walletProvider.getGasPrice()
- console.log("expectedGasLimit:",expectedGasLimit.toString());
- 
-    
-     console.log("currentAllowance: ", currentAllowance.toString() , " and token amount is ",Number(nonBNBActualAmount) );
-     
+    const expectedGasLimit = await walletProvider.getGasPrice();
+    console.log("expectedGasLimit:", expectedGasLimit.toString());
+
+    console.log(
+      "currentAllowance: ",
+      currentAllowance.toString(),
+      " and token amount is ",
+      Number(nonBNBActualAmount)
+    );
+
     if (Number(currentAllowance.toString()) >= Number(nonBNBActualAmount)) {
-      
-       
       const liquidityRes = await swappingContractInsatnce.addLiquidityETH(
         NON_BNB_TOKEN.address,
         nonBNBActualAmount,
         actualAmount,
         account,
-        { value: amountAfterFee.toString() , gasLimit: 6000000}
+        { value: amountAfterFee.toString(), gasLimit: 6000000 }
       ); //we are using quote value here (bitscoin)
       console.log("liquidityRes: ", liquidityRes);
     } else {
       console.log("enter in else ");
-      
-       const approveData = await doApproval(NON_BNB_TOKEN.instance);
+
+      const approveData = await doApproval(NON_BNB_TOKEN.instance);
       const liquidityRes = await swappingContractInsatnce.addLiquidityETH(
         NON_BNB_TOKEN.address,
         nonBNBActualAmount,
         actualAmount,
         account,
-        { value: amountAfterFee.toString() , gasLimit: 6000000 }
+        { value: amountAfterFee.toString(), gasLimit: 6000000 }
       ); //we are using quote value here (bitscoin)
       console.log("liquidityRes: ", liquidityRes);
     }
@@ -357,7 +381,6 @@ export const SwapProvider = ({ children }) => {
     );
     const currentTokenBAllowance = calculateAllowance(tokenBAddressInsatnce);
     const currentTokenAAllowance = calculateAllowance(tokenA_AddressInsatnce);
-     
 
     if (
       Number(currentTokenAAllowance.toString()) >= Number(token_A_Amount) &&
@@ -387,7 +410,15 @@ export const SwapProvider = ({ children }) => {
 
   return (
     <SwapContext.Provider
-      value={{ dispatch, state, getSwapQuote, handleSwapToken, addPool }}
+      value={{
+        dispatch,
+        state,
+        getSwapQuote,
+        handleSwapToken,
+        addPool,
+        pairError,
+        setTokenBValue,
+      }}
     >
       {children}
     </SwapContext.Provider>
