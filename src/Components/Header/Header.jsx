@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import ethLogo from "../../assets/images/eth_logo.png";
+import ethLogo from "../../assets/images/pngwing.com.png";
 import { Link, NavLink } from "react-router-dom";
 import { useMetaMask } from "../../context/MetamaskContext";
 import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";

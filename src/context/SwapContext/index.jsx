@@ -391,7 +391,7 @@ export const SwapProvider = ({ children }) => {
         state.tokenB.address,
         token_A_Amount,
         token_B_Amount,
-        account
+        account,{gasLimit: 6000000}
       ); //we are using quote value here (bitscoin)
       console.log("liquidityTokenRes: ", liquidityTokenRes);
     } else {
@@ -402,7 +402,7 @@ export const SwapProvider = ({ children }) => {
         state.tokenB.address,
         token_A_Amount,
         token_B_Amount,
-        account
+        account,{gasLimit: 6000000}
       ); //we are using quote value here (bitscoin)
       console.log("liquidityTokenRes: ", liquidityTokenRes);
     }
