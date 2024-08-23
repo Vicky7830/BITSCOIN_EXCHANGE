@@ -13,7 +13,7 @@ import bitscoin from "./../../assets/icon_new/Bitscoin.png.png";
 import { useMetaMask } from "../MetamaskContext";
 import { useCommonContext } from "../CommonContext";
 
-const swappingContractAddress = "0xEAbF2BC47547F75Eff162C00b291F43A425781B8";
+const swappingContractAddress = "0x9537b5245426731103c3860e4308a8FDe14e652F";
 
 const SwapContext = createContext();
 
@@ -418,6 +418,7 @@ export const SwapProvider = ({ children }) => {
         addPool,
         pairError,
         setTokenBValue,
+        swappingContractInsatnce
       }}
     >
       {children}

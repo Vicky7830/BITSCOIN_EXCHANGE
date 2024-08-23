@@ -1,9 +1,11 @@
+import { ethers } from "ethers";
+
 import {
   AddOutlined,
   KeyboardArrowDownOutlined,
   KeyboardBackspaceOutlined,
 } from "@mui/icons-material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TokenSelect from "../Components/Modals/TokenSelect";
 import { Link } from "react-router-dom";
 import { calculateToken } from "../Utils/calculateToken";
@@ -30,6 +32,7 @@ const AddLiquidity = () => {
     addPool,
     pairError,
     setTokenBValue,
+    swappingContractInsatnce,
   } = useSwapContext();
 
   const [openModal, setOpenModal] = useState(false);
@@ -50,6 +53,31 @@ const AddLiquidity = () => {
   const [amountA, setAmountA] = useState("");
   const [amountB, setAmountB] = useState("");
   const [active, setActive] = useState("");
+
+  const [tokenToToken, setTokenToToken] = useState("");
+
+  useEffect(() => {
+    handleGetTokenToToken();
+  }, []);
+
+  const handleGetTokenToToken = async () => {
+    const EtherToWei = ethers.utils.parseUnits("1", state.tokenA.decimals + "");
+    const tokenA = state.tokenA.address;
+    const tokenB = state.tokenB.address;
+    const quotedValue = await swappingContractInsatnce.quote(
+      EtherToWei,
+      tokenA,
+      tokenB
+    );
+    const WeiToEther = ethers.utils.formatUnits(
+      quotedValue.toString(),
+      state.tokenB.decimals + ""
+    );
+
+    setTokenToToken(WeiToEther);
+  };
+
+  console.log(tokenToToken, ">>>> token to token");
 
   return (
     <div className={`${as.ExchangeCont} py-20`}>
@@ -171,6 +199,24 @@ const AddLiquidity = () => {
                   </div>
                 </div>
               </div>
+
+              {tokenToToken && (
+                <div className="flex justify-between items-center mt-4 bg-[#1f1e1e] rounded-2xl p-4 border border-[#222223] hover:border-[#b2bad626] transition-none">
+                  <div className="">
+                    <p className="">
+                      <p>{(1 / tokenToToken)?.toFixed(7)}</p>
+                      {state.tokenA?.coinSymbol} per {state.tokenB?.coinSymbol}
+                    </p>
+                  </div>
+                  <div>
+                    <p>{(tokenToToken * 1)?.toFixed(4)}</p>
+
+                    <p>
+                      {state.tokenB?.coinSymbol} per {state.tokenA?.coinSymbol}
+                    </p>
+                  </div>
+                </div>
+              )}
               {tokenA.coinSymbol && tokenB.coinSymbol && (
                 <div className="mt-5 bg-[#1f1e1e] rounded-2xl border border-[#b2bad626] transition-none">
                   <div className="p-4">

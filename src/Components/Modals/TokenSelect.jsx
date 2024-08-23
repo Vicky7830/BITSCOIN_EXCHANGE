@@ -9,9 +9,9 @@ import { SET_TOKEN_VALUE, useSwapContext } from "../../context/SwapContext";
 import commonTokenAbi from "./../../enviornment/commonTokenAbi.json";
 
 const TokenSelect = ({ show, handleClose, sellToken, buyToken, active }) => {
-  const { state, dispatch } = useSwapContext();
-  const [tokenList, setTokenList] = useState(staticTokens);
+  const { state, dispatch, swappingContractInsatnce } = useSwapContext();
 
+  const [tokenList, setTokenList] = useState(staticTokens);
   const [tokenAddress, setTokenAddress] = useState("");
 
   const walletProvider = new ethers.providers.Web3Provider(window.ethereum);
@@ -58,6 +58,8 @@ const TokenSelect = ({ show, handleClose, sellToken, buyToken, active }) => {
     }
   };
 
+
+
   useEffect(() => {
     if (tokenAddress) {
       handleInputTokenAddress();
@@ -68,6 +70,8 @@ const TokenSelect = ({ show, handleClose, sellToken, buyToken, active }) => {
     dispatch({ type: SET_TOKEN_VALUE, payload: selectedToken });
     handleClose();
   };
+
+ 
 
   return (
     <div>
