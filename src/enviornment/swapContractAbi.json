@@ -553,6 +553,40 @@
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "userAddress",
+				"type": "address"
+			}
+		],
+		"name": "getUserLPTokens",
+		"outputs": [
+			{
+				"internalType": "address[]",
+				"name": "fetchedPairs",
+				"type": "address[]"
+			},
+			{
+				"internalType": "string[]",
+				"name": "tokensA_Symbol",
+				"type": "string[]"
+			},
+			{
+				"internalType": "string[]",
+				"name": "tokensB_Symbol",
+				"type": "string[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "totalLPTokens",
+				"type": "uint256[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "owner",
 		"outputs": [
