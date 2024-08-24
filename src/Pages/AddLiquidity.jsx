@@ -58,6 +58,10 @@ const AddLiquidity = () => {
     handleGetTokenToToken();
   }, [state.tokenA, state.tokenB]);
 
+  useEffect(() => {
+    getPoolShare();
+  }, [state.tokenAValue, state.tokenBValue])
+
   const handleGetTokenToToken = async () => {
     try {
       const EtherToWei = ethers.utils.parseUnits(
@@ -76,8 +80,9 @@ const AddLiquidity = () => {
         state.tokenB.decimals + ""
       );
 
+      getPoolShare();
       // Implement logic here to get pool share
- 
+
       setPoolShare(10);
 
       setTokenToToken(WeiToEther);
@@ -92,20 +97,28 @@ const AddLiquidity = () => {
 
   //========
   const getPoolShare = async () => {
+    try {
+      console.log(state.tokenAValue, "state.tokenAValue");
+      const tokenAValue = ethers.utils.parseUnits(
+        state.tokenAValue,
+        state.tokenA.decimals + ""
+      );
+      const poolShare = await swappingContractInsatnce.getCurrentPoolShare(
+        state.tokenA.address,
+        state.tokenB.address,
+        tokenAValue
+      );
+      const poolSharePercentage = Number(poolShare.toString()) / 100;
+      console.log(poolSharePercentage, "poolSharePercentage");
 
-    console.log(state.tokenAValue,"state.tokenAValue");
-    const tokenAValue = ethers.utils.parseUnits(
-      state.tokenAValue,
-      state.tokenA.decimals + ""
-    );
-  const poolShare = await swappingContractInsatnce.getCurrentPoolShare(state.tokenA.address,state.tokenB.address,tokenAValue);
-  const poolSharePercentage = Number(poolShare.toString())/100;
-  console.log(poolSharePercentage,"poolSharePercentage");
-  
-  return poolSharePercentage.toFixed(2);
-  
-   }
-   //==========
+      setPoolShare(poolSharePercentage.toFixed(2))
+      return poolSharePercentage.toFixed(2);
+
+    } catch (error) {
+      console.log(error, ">>>>>> getpoolshare error")
+    }
+  };
+  //==========
 
   return (
     <div className={`${as.ExchangeCont} py-20`}>
@@ -329,7 +342,6 @@ const AddLiquidity = () => {
                 </button>
               )}
             </div>
-            <button onClick={getPoolShare}>check share</button>
           </div>
         </div>
       </div>
