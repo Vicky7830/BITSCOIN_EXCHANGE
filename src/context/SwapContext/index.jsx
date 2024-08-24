@@ -13,7 +13,7 @@ import bitscoin from "./../../assets/icon_new/Bitscoin.png.png";
 import { useMetaMask } from "../MetamaskContext";
 import { useCommonContext } from "../CommonContext";
 
-const swappingContractAddress = "0x9537b5245426731103c3860e4308a8FDe14e652F";
+const swappingContractAddress = "0xe455baB5373Bc0171873ACFfcD977Fe0b728dBBf";
 
 const SwapContext = createContext();
 

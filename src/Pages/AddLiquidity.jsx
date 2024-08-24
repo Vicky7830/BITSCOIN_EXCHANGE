@@ -77,6 +77,7 @@ const AddLiquidity = () => {
       );
 
       // Implement logic here to get pool share
+ 
       setPoolShare(10);
 
       setTokenToToken(WeiToEther);
@@ -86,6 +87,23 @@ const AddLiquidity = () => {
       }
     }
   };
+
+  //========
+  const getPoolShare = async () => {
+
+    console.log(state.tokenAValue,"state.tokenAValue");
+    const tokenAValue = ethers.utils.parseUnits(
+      state.tokenAValue,
+      state.tokenA.decimals + ""
+    );
+  const poolShare = await swappingContractInsatnce.getCurrentPoolShare(state.tokenA.address,state.tokenB.address,tokenAValue);
+  const poolSharePercentage = Number(poolShare.toString())/100;
+  console.log(poolSharePercentage,"poolSharePercentage");
+  
+  return poolSharePercentage.toFixed(2);
+  
+   }
+   //==========
 
   return (
     <div className={`${as.ExchangeCont} py-20`}>
@@ -309,6 +327,7 @@ const AddLiquidity = () => {
                 </button>
               )}
             </div>
+            <button onClick={getPoolShare}>check share</button>
           </div>
         </div>
       </div>
