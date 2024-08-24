@@ -56,7 +56,7 @@ const AddLiquidity = () => {
 
   useEffect(() => {
     handleGetTokenToToken();
-  }, [state.tokenA]);
+  }, [state.tokenA, state.tokenB]);
 
   const handleGetTokenToToken = async () => {
     try {
@@ -81,7 +81,9 @@ const AddLiquidity = () => {
       setPoolShare(10);
 
       setTokenToToken(WeiToEther);
+      // debugger
     } catch (err) {
+      // debugger
       if (err.reason == "Pair does not exist") {
         setTokenToToken("ERROR");
       }
