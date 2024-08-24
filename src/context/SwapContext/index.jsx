@@ -102,6 +102,8 @@ function reducer(state, action) {
   }
 }
 
+const ERC20_ABI = ["function balanceOf(address owner) view returns (uint256)"];
+
 export const SwapProvider = ({ children }) => {
   const { account } = useMetaMask();
   const { setLoading } = useCommonContext();
@@ -109,6 +111,11 @@ export const SwapProvider = ({ children }) => {
   const walletProvider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = walletProvider.getSigner();
   const [pairError, setPairError] = useState(false);
+
+  const [balances, setBalances] = useState({
+    tokenA: "",
+    tokenB: "",
+  });
 
   const swappingContractInsatnce = new ethers.Contract(
     swappingContractAddress,
@@ -274,7 +281,7 @@ export const SwapProvider = ({ children }) => {
       }
       setLoading(false);
     } catch (error) {
-      console.log(error, " HANDLE SWAOPP TOKEN ERROR ")
+      console.log(error, " HANDLE SWAOPP TOKEN ERROR ");
       setLoading(false);
     }
   };
@@ -391,7 +398,8 @@ export const SwapProvider = ({ children }) => {
         state.tokenB.address,
         token_A_Amount,
         token_B_Amount,
-        account,{gasLimit: 6000000}
+        account,
+        { gasLimit: 6000000 }
       ); //we are using quote value here (bitscoin)
       console.log("liquidityTokenRes: ", liquidityTokenRes);
     } else {
@@ -402,11 +410,80 @@ export const SwapProvider = ({ children }) => {
         state.tokenB.address,
         token_A_Amount,
         token_B_Amount,
-        account,{gasLimit: 6000000}
+        account,
+        { gasLimit: 6000000 }
       ); //we are using quote value here (bitscoin)
       console.log("liquidityTokenRes: ", liquidityTokenRes);
     }
   }
+
+  async function getNativeBalance(type) {
+    const balance = await walletProvider.getBalance(account);
+    console.log(`Native Balance: ${ethers.utils.formatEther(balance)} ETH`);
+    // const obj = ;
+
+    setBalances((balances) =>({
+      ...balances,
+      ...(type == "A"
+        ? {
+            tokenA:
+              "" +
+              ethers.utils.formatEther(balance, "" + state.tokenA.decimals),
+          }
+        : {}),
+      ...(type == "B"
+        ? {
+            tokenB: ethers.utils.formatEther(
+              balance,
+              "" + state.tokenB.decimals
+            ),
+          }
+        : {}),
+    }));
+  }
+
+  async function getTokenBalance(tokenAddress, type) {
+    const tokenContract = new ethers.Contract(tokenAddress, ERC20_ABI, signer);
+    const balance = await tokenContract.balanceOf(account);
+    console.log(
+      `Token Balance: ${ethers.utils.formatUnits(balance, 18)} TOKEN_SYMBOL`
+    );
+
+    setBalances((balances) => ({
+      ...balances,
+      ...(type === "A"
+        ? {
+            tokenA: ethers.utils.formatUnits(
+              balance,
+              state.tokenA.decimals
+            ),
+          }
+        : {}),
+      ...(type === "B"
+        ? {
+            tokenB: ethers.utils.formatUnits(
+              balance,
+               state.tokenB.decimals
+            ),
+          }
+        : {}),
+    }));
+  }
+  useEffect(() => {
+    if (state.tokenA.coinSymbol === "BNB") {
+      getNativeBalance("A");
+    } else {
+      getTokenBalance(state.tokenA.address, "A");
+    }
+  }, [state.tokenA]);
+
+  useEffect(() => {
+    if (state.tokenB.coinSymbol === "BNB") {
+      getNativeBalance("B");
+    } else {
+      getTokenBalance(state.tokenB.address, "B");
+    }
+  }, [state.tokenB]);
 
   return (
     <SwapContext.Provider
@@ -418,7 +495,8 @@ export const SwapProvider = ({ children }) => {
         addPool,
         pairError,
         setTokenBValue,
-        swappingContractInsatnce
+        swappingContractInsatnce,
+        balances,
       }}
     >
       {children}

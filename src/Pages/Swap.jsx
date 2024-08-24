@@ -14,16 +14,16 @@ import {
   TOKEN_B,
   useSwapContext,
 } from "../context/SwapContext";
-import as from "./Bg.module.css"
+import as from "./Bg.module.css";
 
 const Swap = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const { state, dispatch, getSwapQuote, handleSwapToken } = useSwapContext();
+  const { state, dispatch, getSwapQuote, handleSwapToken, balances } =
+    useSwapContext();
 
-  const [openModal, setOpenModal] = useState(false);
   const [sellToken, setSellToken] = useState({
     coinName: "Binance Coin",
     coinSymbol: "BNB",
@@ -56,7 +56,17 @@ const Swap = () => {
             </h4>
             <div className="mt-3">
               <div className=" bg-[#1f1e1e] rounded-2xl p-4 border border-[#222223] hover:border-[#b2bad626] transition-none">
-                <span className="text-sm text-gray-400 font-medium">Sell</span>
+                <div className="flex gap-2 items-center justify-between mb-2">
+                  <span className="text-sm text-gray-400 font-medium">
+                    Sell
+                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-gray-400 font-medium">
+                      Balance :{" "}
+                    </span>
+                    <p className="m-0"> {(1 * balances.tokenA)?.toFixed(2)}</p>
+                  </div>
+                </div>
                 <div className="flex items-center justify-between">
                   <div className="w-[60%]">
                     <input
@@ -124,7 +134,15 @@ const Swap = () => {
                 </div>
               </div>
               <div className=" bg-[#1f1e1e] rounded-2xl p-4 border border-[#222223] hover:border-[#b2bad626] transition-none">
-                <span className="text-sm text-gray-400 font-medium">Buy</span>
+                <div className="flex gap-2 items-center justify-between mb-2">
+                  <span className="text-sm text-gray-400 font-medium">Buy</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-gray-400 font-medium">
+                      Balance :{" "}
+                    </span>
+                    <p className="m-0"> {(1 * balances.tokenB)?.toFixed(2)}</p>
+                  </div>
+                </div>
                 <div className="flex items-center justify-between">
                   <div className="w-[60%]">
                     <input
@@ -201,10 +219,8 @@ const Swap = () => {
               show={show}
               handleShow={handleShow}
               handleClose={handleClose}
-              
               sellToken={sellToken}
               buyToken={buyToken}
-             
               active={active}
             />
           </div>

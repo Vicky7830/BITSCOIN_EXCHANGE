@@ -68,7 +68,7 @@ const Pool = () => {
                 </Link>
               </div>
             </div>
-            <div className="p-4 border border-gray-400 mt-4 rounded-xl flex justify-between w-full">
+            <div className="flex-col p-4 border border-gray-400 mt-4 rounded-xl flex justify-between w-full">
               {lpTokens.length === 0 ? (
                 <>
                   <p>No liquidity found.</p>
