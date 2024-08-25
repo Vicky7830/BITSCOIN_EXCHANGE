@@ -83,7 +83,7 @@ const AddLiquidity = () => {
       getPoolShare();
       // Implement logic here to get pool share
 
-      setPoolShare(10);
+      setPoolShare(0);
 
       setTokenToToken(WeiToEther);
       // debugger
