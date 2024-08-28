@@ -25,8 +25,8 @@ export const tokenList = [
     coinSymbol: 'BRGT',
     coinImg: brightGold,
     coinName: 'BRIGHT GOLD',
-    address: '0xeE009c5aC1945D18612a0154f78607D9f721DAEf',
-    decimals: 8,
+    address: '0xcF1283fFEb71Bf76c3660023338F3f3a40B4b4F9',
+    decimals: 18,
   },
   {
     coinSymbol: 'BITSSWAP',
@@ -40,7 +40,7 @@ export const tokenList = [
     coinSymbol: 'DAI',
     coinImg: 'https://tokens.1inch.io/0x6b175474e89094c44da98b954eedeac495271d0f.png',
     coinName: 'Dai Token',
-    address: '0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3',
+    address: '0x3793D3536eecC12D93f77513D5800449582Ad2a3',
     decimals: 18,
   },
   {

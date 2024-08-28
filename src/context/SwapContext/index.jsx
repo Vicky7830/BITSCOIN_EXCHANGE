@@ -403,8 +403,8 @@ export const SwapProvider = ({ children }) => {
       ); //we are using quote value here (bitscoin)
       console.log("liquidityTokenRes: ", liquidityTokenRes);
     } else {
-      // const approveDataA = await doApproval(tokenA_AddressInsatnce);
-      // const approveData = await doApproval(tokenBAddressInsatnce);
+      const approveDataA = await doApproval(tokenA_AddressInsatnce);
+      const approveData = await doApproval(tokenBAddressInsatnce);
       const liquidityTokenRes = await swappingContractInsatnce.addLiquidity(
         state.tokenA.address,
         state.tokenB.address,
