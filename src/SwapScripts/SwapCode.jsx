@@ -5,10 +5,12 @@ import { ethers } from "ethers";
 
 export const SwapCode = () => {
   // const swappingContractAddress = "0x4c48775301a53dBD8BF6c361EA3Eb8beF95849c2";
-  const swappingContractAddress = "0xe455baB5373Bc0171873ACFfcD977Fe0b728dBBf";
+  const swappingContractAddress = "0x2e0D7CcC6a825a73cfa608A8986dDa0B7a602915";
   const functionCallerAddress = "0x98a9E141Da7814bFAe91bCe5920194af20cd65F5";
   const tokenBAddress = "0x9A1628b2f0D8f183b72841cA9374049Eaa8d0eA0"; //bitscoin
-  const tokenA_address = "0xF352E4D29CDa25e1F89F5629Ba0FBf58D867A584"; //usdt
+  // const tokenA_address = "0xF352E4D29CDa25e1F89F5629Ba0FBf58D867A584"; //usdt
+  const tokenA_address = "0x55d398326f99059fF775485246999027B3197955"; //usdt
+
 
   const walletProvider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = walletProvider.getSigner();

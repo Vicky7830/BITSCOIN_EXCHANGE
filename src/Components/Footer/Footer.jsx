@@ -35,7 +35,7 @@ const Footer = () => {
                             {/* icon  */}
                             <div className={`${as.img_cont}  d-flex justify-content-center align-items-center`}  >
                                 {/* logo   */}
-                                <img alt='coin_icon' loading='lazy' src={require("../../assets/icon.png")}    ></img>
+                                <img alt='coin_icon' loading='lazy' src={require("../../assets/icon_new/Bitscoin.png.png")}    ></img>
                             </div>
 
                             {/* 2nf  / */}

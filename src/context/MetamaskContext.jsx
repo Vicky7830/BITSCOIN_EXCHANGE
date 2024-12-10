@@ -67,21 +67,21 @@ export const MetaMaskProvider = ({ children }) => {
           method: "eth_chainId",
         });
         console.log(chainId);
-        if (chainId !== "0x61") {
+        if (chainId !== "0x38") {
           // Prompt user to switch network
           await window.ethereum.request({
             method: "wallet_addEthereumChain",
             params: [
               {
-                chainId: "0x61",
-                chainName: "Binance Smart Chain Testnet",
-                rpcUrls: ["https://data-seed-prebsc-1-s1.binance.org:8545/"],
+                chainId: "0x38",
+                chainName: "Binance Smart Chain",
+                rpcUrls: ["https://go.getblock.io/47b9e550c8a240c7b40e3e1f94b767a9"],
                 nativeCurrency: {
                   name: "Binance Coin",
                   symbol: "BNB",
                   decimals: 18,
                 },
-                blockExplorerUrls: ["https://testnet.bscscan.com"],
+                blockExplorerUrls: ["https://bscscan.com/"],
               },
             ],
           });

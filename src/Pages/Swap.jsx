@@ -21,7 +21,7 @@ const Swap = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const { state, dispatch, getSwapQuote, handleSwapToken, balances } =
+  const { state, dispatch, getSwapQuote, handleSwapToken, balances, pairError } =
     useSwapContext();
 
   const [sellToken, setSellToken] = useState({
@@ -46,6 +46,7 @@ const Swap = () => {
     // setBuyToken(temp);
   };
 
+  
   return (
     <>
       <div className={`${as.ExchangeCont} py-20`}>
@@ -76,7 +77,10 @@ const Swap = () => {
                       className="h-11 border-0 bg-transparent focus:outline-0 focus:border-0 focus:ring-0 px-0 text-4xl placeholder:text-gray-400 mt-1 py-0 w-full"
                       // onChange={(e) => setSell(e.target.value)}
                       onChange={
-                        (e) => getSwapQuote(e.target.value)
+                        (e) => {
+                        
+                          getSwapQuote(e.target.value)
+                        }
                         // dispatch({ type: A_INPUT, payload: e.target.value })
                       }
                     />
@@ -203,7 +207,7 @@ const Swap = () => {
                     onClick={handleSwapToken}
                     className="w-full mt-1 py-3 px-5 text-xl font-medium rounded-2xl bg-[#cead3f2d] text-gold hover:bg-[#cead3f58]  active:bg-[#cead3f7a]"
                   >
-                    Swap
+                  { pairError ? "Insufficient liquidity for this trade" :  "Swap"}
                   </button>
                 ) : (
                   <button

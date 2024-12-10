@@ -13,7 +13,7 @@ import bitscoin from "./../../assets/icon_new/Bitscoin.png.png";
 import { useMetaMask } from "../MetamaskContext";
 import { useCommonContext } from "../CommonContext";
 
-const swappingContractAddress = "0xe455baB5373Bc0171873ACFfcD977Fe0b728dBBf";
+const swappingContractAddress = "0x2e0D7CcC6a825a73cfa608A8986dDa0B7a602915";
 
 const SwapContext = createContext();
 
@@ -139,7 +139,10 @@ export const SwapProvider = ({ children }) => {
 
   const getSwapQuote = async (value) => {
     try {
-      // setPairError(false)
+      if (value == 0 || value == "") {
+        dispatch({ type: B_INPUT, payload: 0 });
+      }
+      setPairError(false)
       dispatch({ type: A_INPUT, payload: value });
       const EtherToWei = ethers.utils.parseUnits(
         value,
@@ -253,7 +256,6 @@ export const SwapProvider = ({ children }) => {
       const fee = await swappingContractInsatnce.chargedFee(actualAmount);
       const amountAfterFee = Number(actualAmount) + Number(fee);
       const currentAllowance = await calculateAllowance(tokenA_AddressInsatnce);
-
       if (Number(currentAllowance.toString()) >= amountAfterFee) {
         // swapExactEthToTokens(actualAmount, amountAfterFee.toString())
         // swapEthToExactTokens(amountOut, amountAfterFee.toString());
@@ -280,6 +282,7 @@ export const SwapProvider = ({ children }) => {
         }
       }
       setLoading(false);
+
     } catch (error) {
       console.log(error, " HANDLE SWAOPP TOKEN ERROR ");
       setLoading(false);
@@ -422,7 +425,7 @@ export const SwapProvider = ({ children }) => {
     console.log(`Native Balance: ${ethers.utils.formatEther(balance)} ETH`);
     // const obj = ;
 
-    setBalances((balances) =>({
+    setBalances((balances) => ({
       ...balances,
       ...(type == "A"
         ? {
@@ -453,18 +456,12 @@ export const SwapProvider = ({ children }) => {
       ...balances,
       ...(type === "A"
         ? {
-            tokenA: ethers.utils.formatUnits(
-              balance,
-              state.tokenA.decimals
-            ),
+            tokenA: ethers.utils.formatUnits(balance, state.tokenA.decimals),
           }
         : {}),
       ...(type === "B"
         ? {
-            tokenB: ethers.utils.formatUnits(
-              balance,
-               state.tokenB.decimals
-            ),
+            tokenB: ethers.utils.formatUnits(balance, state.tokenB.decimals),
           }
         : {}),
     }));

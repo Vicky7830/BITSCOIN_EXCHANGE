@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unused-modules */
 /* eslint-disable no-unused-vars */
 import bitscoin from './icon_new/Bitscoin.png.png'
-import bitswap from './icon_new/bitsswap.jpg'
+import bitswap from './icon_new/icon_big_300.png'
 import brightGold from './icon_new/brightgold.jpeg'
 
 export const tokenList = [
@@ -9,8 +9,8 @@ export const tokenList = [
     coinSymbol: 'BTS',
     coinImg: bitscoin,
     coinName: 'BITSCOIN',
-    // address: '0x269c4867bc193c043b3E02BC8D2Cc68088D21023',
-    address: '0x9A1628b2f0D8f183b72841cA9374049Eaa8d0eA0',  //testing
+     address: '0x269c4867bc193c043b3E02BC8D2Cc68088D21023',
+    // address: '0x9A1628b2f0D8f183b72841cA9374049Eaa8d0eA0',  //testing
     decimals: 18,
   },
   {
@@ -25,13 +25,13 @@ export const tokenList = [
     coinSymbol: 'BRGT',
     coinImg: brightGold,
     coinName: 'BRIGHT GOLD',
-    address: '0xcF1283fFEb71Bf76c3660023338F3f3a40B4b4F9',
+    address: '0xF57F43f761F53b058Db0a15b82aD507fC59FE2D8',
     decimals: 18,
   },
   {
-    coinSymbol: 'BITSSWAP',
+    coinSymbol: 'BITSSWAPS',
     coinImg: bitswap,
-    coinName: 'bitsswaps',
+    coinName: 'BITSSWAPS',
     address: '0x73e54252A7c12459EE05B404891cD262d2bCA56d',
     decimals: 18,
   },
@@ -54,7 +54,9 @@ export const tokenList = [
     coinSymbol: 'USDT',
     coinImg: 'https://cdn.moralis.io/eth/0xdac17f958d2ee523a2206206994597c13d831ec7.png',
     coinName: 'Tether USD',
-    address: '0xF352E4D29CDa25e1F89F5629Ba0FBf58D867A584',
+    // address: '0xF352E4D29CDa25e1F89F5629Ba0FBf58D867A584',
+    address: '0x55d398326f99059fF775485246999027B3197955',
+
     decimals: 18,
   },
   {
