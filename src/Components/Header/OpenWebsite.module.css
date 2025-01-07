@@ -1,0 +1,47 @@
+/* Full screen container */
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: url("../../assets/bnr1.jpg") no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+  }
+  
+  /* Responsive iframe container */
+  .iframeWrapper {
+    margin-top: -4px;
+    width: 100%;
+    max-width: 100%;
+    height: 100vh;
+    max-height: 800px;
+    overflow: hidden;
+    border-radius: 10px;
+  }
+  
+  /* Iframe styling */
+  .iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  
+  /* Media queries for responsiveness */
+  @media (max-width: 768px) {
+    .iframeWrapper {
+      height: 100vh;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .iframeWrapper {
+      height: 100vh;
+    }
+  }
+  

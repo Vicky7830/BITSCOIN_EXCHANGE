@@ -62,7 +62,9 @@ const [mobileSidebar, setMobileSidebar] = useState(false)
     const mobileSideVis = async () => {
       setMobileSidebar(!mobileSidebar);
     };
-  
+
+
+   
 
 // useEffect(()=>{
 //   const NavList  = document.getElementsByClassName("NavList")
@@ -212,7 +214,7 @@ const [mobileSidebar, setMobileSidebar] = useState(false)
 
                     {/* 2 */}
 
-                    <li className="d-flex" onClick={() => navigate("")}  >
+                    <li className="d-flex" onClick={() => navigate("/staking")}  >
                       {/* exchnage icon container  */}
                       <div className={`${as.li1} `}>
                         <span>
@@ -221,8 +223,10 @@ const [mobileSidebar, setMobileSidebar] = useState(false)
                       </div>
 
                       {/* exchange icon next text   */}
+                      
+
                       <div className={`${as.li2}  d-flex flex-column`}>
-                        <div className={`${as.li2a}`}>Fixed Staking</div>
+                        <div className={`${as.li2a}`}>Fixed & Flexible Staking</div>
                         <div className={`${as.li2b} `}>
                           Earn high returns, Easy Stake
                         </div>

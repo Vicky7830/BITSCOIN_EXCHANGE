@@ -10,6 +10,7 @@ import Loader from "./Components/Common/Loader";
 import { CommonProvider } from "./context/CommonContext";
 import { SearchTokenData } from "./SwapScripts/SearchTokenData";
 import Home from "./Pages/Home/Home";
+import OpenWebsite from "./Components/Header/OpenWebsite";
 
 function App() {
   console.log("... test");
@@ -33,6 +34,10 @@ function App() {
         {
           path: "/add/v2",
           element: <AddLiquidity />,
+        },
+        {
+          path: "/Staking",
+          element: <OpenWebsite />,
         },
       ],
     },

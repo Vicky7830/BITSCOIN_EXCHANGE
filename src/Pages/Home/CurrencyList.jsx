@@ -42,13 +42,13 @@ const Highest1hrRenderer = (params) => {
 const Landing2 = () => {
   const [rowData, setRowData] = useState([]);
   const [colDefs] = useState([
-    { field: "#", width: 60 },
-    { field: " ", cellRenderer: SimpleComp, width: 70 },
-    { field: "Coin", width: 180 },
-    { field: "Price", width: 250 },
-    { field: "24h", cellRenderer: PriceChangeRenderer },
-    { field: "Market Cap" },
-    { field: "24h Volume", width: 200 },
+    { field: '#', minWidth: 50, flex: 1 },
+  { field: ' ', cellRenderer: SimpleComp, minWidth: 70, flex: 1 },
+  { field: 'Coin', minWidth: 150, flex: 2 },
+  { field: 'Price', minWidth: 100, flex: 1 },
+  { field: '24h', cellRenderer: PriceChangeRenderer, minWidth: 100, flex: 1 },
+  { field: 'Market Cap', minWidth: 150, flex: 1 },
+  { field: '24h Volume', minWidth: 150, flex: 1 },
   ]);
 
   const defaultColDef = useMemo(() => ({
@@ -56,10 +56,14 @@ const Landing2 = () => {
     sortable: true,
   }));
 
-  const gridOptions = {
-    pagination: true,
-    paginationPageSize: 10,
-  };
+  // const gridOptions = {
+  //   pagination: true,
+  //   paginationPageSize: 10,
+  // };
+
+
+
+
 
   const fetchCryptoData = async () => {
     try {
@@ -112,7 +116,8 @@ const Landing2 = () => {
           <AgGridReact
             columnDefs={colDefs}
             rowData={rowData}
-            gridOptions={gridOptions}
+          //  gridOptions={gridOptions }
+
             defaultColDef={defaultColDef}
           />
         </div>

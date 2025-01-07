@@ -14,7 +14,10 @@ import {
   TOKEN_B,
   useSwapContext,
 } from "../context/SwapContext";
-import as from "./Bg.module.css";
+// import as from "./Bg.module.css";
+import as from "./Exchange.module.css"
+import { MdHistory } from "react-icons/md";
+
 
 const Swap = () => {
   const [show, setShow] = useState(false);
@@ -49,14 +52,14 @@ const Swap = () => {
   
   return (
     <>
-      <div className={`${as.ExchangeCont} py-20`}>
-        <div className="container mx-auto">
-          <div className="max-w-[500px] mx-auto">
-            <h4 className="px-5 py-2 bg-[#1f1e1e] w-fit rounded-[20px] tracking-wide font-medium">
+  <div className={`${as.ExchangeCont} w100 h70  d-flex align-items-center justify-content-center`}   >    
+  <div className={`${as.SwapCont} d-flex flex-column`}  >
+  <div className="max-w-[500px] mx-auto">
+            <h4 className=" bg-[#ac71c6] px-5 py-2 bg-[#1f1e1e] w-fit rounded-[20px] tracking-wide font-medium">
               Swap
             </h4>
             <div className="mt-3">
-              <div className=" bg-[#1f1e1e] rounded-2xl p-4 border border-[#222223] hover:border-[#b2bad626] transition-none">
+              <div className=" bg-[#442c66] rounded-2xl p-4 border border-[#222223] hover:border-[#b2bad626] transition-none" >
                 <div className="flex gap-2 items-center justify-between mb-2">
                   <span className="text-sm text-gray-400 font-medium">
                     Sell
@@ -112,7 +115,7 @@ const Swap = () => {
                             </span>{" "}
                           </>
                         ) : (
-                          <span className="text-lg font-medium pl-2 pr-1 ">
+                          <span className="text-lg font-medium pl-2 pr-1">
                             Select Token
                           </span>
                         )}
@@ -131,13 +134,13 @@ const Swap = () => {
               </div>
               <div>
                 <div
-                  className="relative z-10 flex justify-center w-10 h-10 mx-auto bg-[#252525] my-[-18px] cursor-pointer items-center rounded-xl border-[#141414] border-4 swap_btn"
+                  className="relative z-10 flex justify-center w-10 h-10 mx-auto bg-[#213879] my-[-18px] cursor-pointer items-center rounded-xl border-[#141414] border-4 swap_btn"
                   onClick={() => handleSwap()}
                 >
                   <ArrowDownwardOutlined />
                 </div>
               </div>
-              <div className=" bg-[#1f1e1e] rounded-2xl p-4 border border-[#222223] hover:border-[#b2bad626] transition-none">
+              <div className=" bg-[#442c66] rounded-2xl p-4 border border-[#222223] hover:border-[#b2bad626] transition-none">
                 <div className="flex gap-2 items-center justify-between mb-2">
                   <span className="text-sm text-gray-400 font-medium">Buy</span>
                   <div className="flex items-center gap-2">
@@ -205,13 +208,13 @@ const Swap = () => {
                 {account ? (
                   <button
                     onClick={handleSwapToken}
-                    className="w-full mt-1 py-3 px-5 text-xl font-medium rounded-2xl bg-[#cead3f2d] text-gold hover:bg-[#cead3f58]  active:bg-[#cead3f7a]"
-                  >
+                    className="w-full mt-1 py-3 px-5 text-xl font-medium rounded-2xl bg-[#ac71c6] text-[#000] hover:bg-[#cead3f58] active:bg-[#cead3f7a]"
+                    >
                   { pairError ? "Insufficient liquidity for this trade" :  "Swap"}
                   </button>
                 ) : (
                   <button
-                    className="w-full mt-1 py-3 px-5 text-xl font-medium rounded-2xl bg-[#cead3f2d] text-gold hover:bg-[#cead3f58]  active:bg-[#cead3f7a]"
+                    className="w-full mt-1 py-3 px-5 text-xl font-medium rounded-2xl bg-[#cead3f2d] text-[#000]  text-gold hover:bg-[#cead3f58]  active:bg-[#cead3f7a]"
                     onClick={connectWallet}
                   >
                     Connect Wallet
@@ -228,6 +231,8 @@ const Swap = () => {
               active={active}
             />
           </div>
+
+         
         </div>
       </div>
     </>

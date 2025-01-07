@@ -38,7 +38,7 @@ const MbSiddebar = (props) => {
 
                     <li
                       className="d-flex"
-                      onClick={() => { props.mobileSideVis()   ;  navigate("/Exchange")}}
+                      onClick={() => { props.mobileSideVis()   ;  navigate("/swap")}}
                     >
                       {/* exchnage icon container  */}
                       <div className={`${as.li1} `}>
@@ -58,7 +58,7 @@ const MbSiddebar = (props) => {
 
                     {/* 2 */}
 
-                    <li className="d-flex" onClick={() => {  props.mobileSideVis()   ;   navigate("/Exchange/Liquidity")}}>
+                    <li className="d-flex" onClick={() => {  props.mobileSideVis()   ;   navigate("/pool")}}>
                       {/* exchnage icon container  */}
                       <div className={`${as.li1} `}>
                         <span>
@@ -91,7 +91,7 @@ const MbSiddebar = (props) => {
                   <ul id={as.tradeDropdown}>
                     {/* 1 */}
 
-                    <li className="d-flex" onClick={() => { props.mobileSideVis()   ;   navigate("/Earn/Farm")}}   >
+                    <li className="d-flex" onClick={() => { props.mobileSideVis()   ;   navigate("")}}   >
                       {/* exchnage icon container  */}
                       <div className={`${as.li1} `}>
                         <span>
@@ -108,7 +108,7 @@ const MbSiddebar = (props) => {
 
                     {/* 2 */}
 
-                    <li className="d-flex" onClick={() => { props.mobileSideVis()   ;   navigate("/Earn/Stake")}}  >
+                    <li className="d-flex" onClick={() => { props.mobileSideVis()   ;   navigate("/staking")}}  >
                       {/* exchnage icon container  */}
                       <div className={`${as.li1} `}>
                         <span>
@@ -139,7 +139,7 @@ const MbSiddebar = (props) => {
                   <ul id={as.tradeDropdown}>
                     {/* 1 */}
 
-                    <li className="d-flex"  onClick={()=>{ props.mobileSideVis() ; navigate("/Exchange/Liquidity/YourPools")}}     >
+                    <li className="d-flex"  onClick={()=>{ props.mobileSideVis() ; navigate("")}}     >
                       {/* exchnage icon container  */}
                       <div className={`${as.li1} `}>
                         <span>
@@ -160,7 +160,7 @@ const MbSiddebar = (props) => {
 
                     {/* 2 */}
 
-                    <li className="d-flex "   onClick={()=>{ props.mobileSideVis()   ; navigate("/Exchange/Liquidity/add")}}     >
+                    <li className="d-flex "   onClick={()=>{ props.mobileSideVis()   ; navigate("")}}     >
                       {/* exchnage icon container  */}
                       <div className={`${as.li1} `}>
                         <span>

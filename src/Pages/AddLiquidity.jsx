@@ -16,7 +16,7 @@ import {
   useSwapContext,
 } from "../context/SwapContext";
 import { useMetaMask } from "../context/MetamaskContext";
-import as from "./Bg.module.css";
+import as from "./Exchange.module.css";
 
 const AddLiquidity = () => {
   const { account } = useMetaMask();
@@ -121,19 +121,20 @@ const AddLiquidity = () => {
   //==========
 
   return (
-    <div className={`${as.ExchangeCont} py-20`}>
-      <div className="container mx-auto">
+    <div className={`${as.ExchangeCont} w100 h70  d-flex align-items-center justify-content-center`}   >    
+  <div className={`${as.SwapCont} d-flex flex-column`}  >
+ 
         <div className="max-w-[450px] mx-auto">
           <div className="border border-gray-600 rounded-2xl p-4">
             <div className="flex justify-between">
               <Link to="/pool">
                 <KeyboardBackspaceOutlined className="!text-gray-600 backIcon" />
               </Link>
-              <h6 className="text-xl font-medium">Add liquidity</h6>
+              <h6 className="  rounded-[10px]  text-xl font-medium">Add liquidity</h6>
               <div></div>
             </div>
             <div className="mt-5">
-              <div className="bg-[#1f1e1e] rounded-2xl p-4 pt-2 border border-[#222223] hover:border-[#b2bad626] transition-none">
+              <div className="bg-[#442c66] rounded-2xl p-4 pt-2 border border-[#222223] hover:border-[#b2bad626] transition-none">
                 <div className="flex flex-col items-end gap-2 ">
                   <div className="flex gap-2 items-center">
                     <span className="text-sm text-gray-400 font-medium">
@@ -148,7 +149,7 @@ const AddLiquidity = () => {
                         type="text"
                         placeholder="0"
                         value={state.tokenAValue}
-                        className="h-11 border-0 bg-transparent focus:outline-0 focus:border-0 focus:ring-0 px-0 text-4xl placeholder:text-gray-400 mt-1 py-0 w-full"
+                        className=" h-11 border-0 bg-transparent focus:outline-0 focus:border-0 focus:ring-0 px-0 text-4xl placeholder:text-gray-400 mt-1 py-0 w-full"
                         // onChange={(e) => setSell(e.target.value)}
                         onChange={
                           (e) => getSwapQuote(e.target.value)
@@ -158,7 +159,7 @@ const AddLiquidity = () => {
                     </div>
                     <div className="inline-block">
                       <button
-                        className="border border-[#98a1c014] bg-[#141414] hover:bg-[#2c2c2e] active:bg-[#3a3a3c] p-1 pr-2 rounded-2xl flex items-center justify-between"
+                        className="border border-[#98a1c014] bg-[#442c66]  hover:bg-[#2c2c2e] active:bg-[#3a3a3c] p-1 pr-2 rounded-2xl flex items-center justify-between"
                         onClick={() => {
                           dispatch({
                             type: SET_ACTIVE_TOKEN,
@@ -197,7 +198,7 @@ const AddLiquidity = () => {
               <div className="py-4 flex justify-center">
                 <AddOutlined className="!text-lxl text-red-500 plusIcon" />
               </div>
-              <div className="bg-[#1f1e1e] rounded-2xl p-4 pt-2 border border-[#222223] hover:border-[#b2bad626] transition-none">
+              <div className="bg-[#442c66] rounded-2xl p-4 pt-2 border border-[#222223] hover:border-[#b2bad626] transition-none">
                 <div className="flex flex-col items-end gap-2 ">
                   <div className="flex gap-2 items-center">
                     <span className="text-sm text-gray-400 font-medium">
@@ -222,7 +223,7 @@ const AddLiquidity = () => {
                     </div>
                     <div className="inline-block">
                       <button
-                        className="border border-[#98a1c014] bg-[#141414] hover:bg-[#2c2c2e] active:bg-[#3a3a3c] p-1 pr-2 rounded-2xl flex items-center justify-between"
+                        className="border border-[#98a1c014] bg-[#442c66] hover:bg-[#2c2c2e] active:bg-[#3a3a3c] p-1 pr-2 rounded-2xl flex items-center justify-between"
                         onClick={() => {
                           dispatch({
                             type: SET_ACTIVE_TOKEN,
@@ -260,7 +261,7 @@ const AddLiquidity = () => {
               </div>
 
               {tokenToToken != "ERROR" ? (
-                <div className="flex flex-col gap-3 justify-between items-center mt-4 bg-[#1f1e1e] rounded-2xl p-4 border border-[#222223] hover:border-[#b2bad626] transition-none">
+                <div className="flex flex-col gap-3 justify-between items-center mt-4 bg-[#442c66] rounded-2xl p-4 border border-[#222223] hover:border-[#b2bad626] transition-none">
                   <div className="flex w-full justify-between">
                     <div className="">
                       <p className="">
@@ -332,12 +333,12 @@ const AddLiquidity = () => {
               {account ? (
                 <button
                   onClick={addPool}
-                  className="w-full py-4 px-5 text-xl font-medium rounded-2xl bg-[#cead3f2d] text-gold hover:bg-[#cead3f58]  active:bg-[#cead3f7a]"
+                  className="w-full py-4 px-5 text-xl font-medium rounded-2xl bg-[#ac71c6] text-gold hover:bg-[#cead3f58]  active:bg-[#cead3f7a]"
                 >
                   {pairError ? "Create pair & add liquidity" : "Add"}
                 </button>
               ) : (
-                <button className="w-full py-4 px-5 text-xl font-medium rounded-2xl bg-[#cead3f2d] text-gold hover:bg-[#cead3f58]  active:bg-[#cead3f7a]">
+                <button className="w-full py-4 px-5 text-xl font-medium rounded-2xl bg-[#ac71c6] text-gold hover:bg-[#cead3f58]  active:bg-[#cead3f7a]">
                   Connect Wallet
                 </button>
               )}

@@ -42,7 +42,7 @@ const Footer = () => {
 
                             <div className={`${as.img_cont}  d-flex flex-column   justify-content-center align-items-start`}  >
                                 <h6 className='mb-0 mt-1 pb-0 letter-spacing-1'>BITS</h6>
-                                <h5 className='mt-1 pt-0 '>0.091</h5>
+                                {/* <h5 className='mt-1 pt-0 '>0.091</h5> */}
                             </div>
                         </div>
 
@@ -72,14 +72,14 @@ const Footer = () => {
                             {/* 1 */}
                             <tr>
                                 <td>Max Supply</td>
-                                <td>1000000000</td>
+                                <td>20,999,933 BTS</td>
                             </tr>
 
                             {/* 2// */}
                             {/* 1 */}
                             <tr>
                                 <td>Total supply</td>
-                                <td>1000000000</td>
+                                <td>20,999,933 BTS</td>
                             </tr>
 
 
@@ -87,7 +87,7 @@ const Footer = () => {
                             {/* 1 */}
                             <tr>
                                 <td>Circulating supply</td>
-                                <td>45424400</td>
+                                <td>updated comming soon</td>
                             </tr>
 
                             {/* 4 */}
@@ -95,7 +95,7 @@ const Footer = () => {
                             {/* 1 */}
                             <tr>
                                 <td>Total Burned</td>
-                                <td>44500.26</td>
+                                <td>update comming soon</td>
                             </tr>
 
                             {/* 5 */}
@@ -103,7 +103,12 @@ const Footer = () => {
                             {/* 1 */}
                             <tr>
                                 <td>Market Cap</td>
-                                <td>758800.23</td>
+                                <td>
+
+
+
+                                    $20.97M
+                                </td>
                             </tr>
                         </tbody>
 
@@ -174,14 +179,14 @@ const Footer = () => {
                     {/* community icons / */}
                     <div className={`${as._community_icons}`}  >
 
-                        <Link className='text-white'  to={""}  target='_blank'    > <SiCoinmarketcap className={`${as._community_icons_icon}`} /> </Link>
-                        <Link className='text-white'  to={"https://t.me/+1cKbjwMxalRkYmRl"}  target='_blank'    ><FaTelegramPlane className={`${as._community_icons_icon}`} /></Link>
-                        <Link className='text-white'  to={"https://www.instagram.com/bitsswaps/"}  target='_blank'    > <RiInstagramFill className={`${as._community_icons_icon}`} /> </Link>
-                        <Link className='text-white'  to={"https://www.facebook.com/profile.php?id=61554413385597"}  target='_blank'    >  <FaFacebook className={`${as._community_icons_icon}`} /> </Link>
-                        <Link className='text-white'  to={""}  target='_blank'    > <FaTwitter className={`${as._community_icons_icon}`} /> </Link>
-                       <Link className='text-white'  to={""}  target='_blank'    >  <FaLinkedin className={`${as._community_icons_icon}`} /> </Link>
-                       <Link className='text-white'  to={"https://www.youtube.com/channel/UCnj71dG9gWSEypZYy98zBFQ"}  target='_blank'    >  <FaYoutube className={`${as._community_icons_icon}`} /> </Link>
-                        <Link className='text-white'  to={""}  target='_blank'    > <FaSquareGithub className={`${as._community_icons_icon}`} /> </Link>
+                        <Link className='text-white' to={""} target='_blank'    > <SiCoinmarketcap className={`${as._community_icons_icon}`} /> </Link>
+                        <Link className='text-white' to={"https://t.me/+1cKbjwMxalRkYmRl"} target='_blank'    ><FaTelegramPlane className={`${as._community_icons_icon}`} /></Link>
+                        <Link className='text-white' to={"https://www.instagram.com/bitsswaps/"} target='_blank'    > <RiInstagramFill className={`${as._community_icons_icon}`} /> </Link>
+                        <Link className='text-white' to={"https://www.facebook.com/profile.php?id=61554413385597"} target='_blank'    >  <FaFacebook className={`${as._community_icons_icon}`} /> </Link>
+                        <Link className='text-white' to={""} target='_blank'    > <FaTwitter className={`${as._community_icons_icon}`} /> </Link>
+                        <Link className='text-white' to={""} target='_blank'    >  <FaLinkedin className={`${as._community_icons_icon}`} /> </Link>
+                        <Link className='text-white' to={"https://www.youtube.com/channel/UCnj71dG9gWSEypZYy98zBFQ"} target='_blank'    >  <FaYoutube className={`${as._community_icons_icon}`} /> </Link>
+                        <Link className='text-white' to={""} target='_blank'    > <FaSquareGithub className={`${as._community_icons_icon}`} /> </Link>
                     </div>
 
                     <div className={`${as.morebtns}  d-flex flex-column`}  >
